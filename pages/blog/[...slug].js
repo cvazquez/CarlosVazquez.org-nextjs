@@ -1,13 +1,21 @@
 // pages/blog/[..slug].js
+import { useRouter } from 'next/router'
 import fetch from 'node-fetch'
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
 
 function Post({ post }) {
+	const router = useRouter()
 
-  return (
-	  <div>
-		  {post.blogPost.content}
-	  </div>
-  );
+	if(router.isFallback) {
+		return <div>Loading...</div>
+	}
+
+	return (
+		<div>
+			{ReactHtmlParser(post.blogPost.content)}
+		</div>
+	);
 }
 
 export async function getStaticPaths() {
