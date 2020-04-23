@@ -27,8 +27,6 @@ export async function getStaticProps() {
 			),
 			homeData = await res.json();
 
-//console.log(homeData)
-
 	return {
 		props:	{
 			homeData,
