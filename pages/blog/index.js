@@ -1,79 +1,53 @@
+import Head from 'next/head'
 import fetch from 'node-fetch'
-import Link from 'next/link'
 import { Container, Row, Col } from 'reactstrap';
+import TopCategories from '../../components/blog/topCategories'
+import LatestPosts from '../../components/blog/latestPosts'
+import LatestComments from '../../components/blog/latestComments'
 
 function Index({homeData}) {
 	return (
-		<div>
-			<div>
-				{LatestPosts({homeData})}
-			</div>
-			<div>
-				{TopCategories({homeData})}
-			</div>
-			<div>
-				{LatestComments({homeData})}
-			</div>
-		</div>
+		<main>
+			<Head>
+				<title>{process.env.global.title}</title>
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
+
+			<Container>
+				<Row>
+					<Col>
+						{LatestPostsMain({homeData})}
+					</Col>
+					<Col>
+						{TopCategories({homeData})}
+						{LatestPostsAside({homeData})}
+						{LatestComments({homeData})}
+					</Col>
+				</Row>
+			</Container>
+		</main>
 	)
 }
 
-function LatestPosts({homeData}) {
+function LatestPostsMain({homeData}) {
 	return (
-		<div>
-				<h2>Latest Posts</h2>
-				{homeData.latestPosts.map(latestPost => (
-						<div key={latestPost.id}>
-							<p>	<Link href="/blog/[slug]" as={`/blog/${latestPost.titleURL}`}>
-									<a>{latestPost.title}</a>
-								</Link>
-								<br />
-								{latestPost.publishDate} | Comments {latestPost.commentCount}
-								<br />
-								{latestPost.contentTeaser}
-							</p>
-						</div>
-					))
-				}
-		</div>
+		<article>
+			<header>
+				<h1>Latest Posts</h1>
+			</header>
+			{LatestPosts({homeData})}
+		</article>
 	)
 }
 
-function TopCategories({homeData}) {
+function LatestPostsAside({homeData}) {
 	return (
-		<div>
-			<h2>Top Categories</h2>
-			{homeData.topCategories.map(topCategory => (
-					<div key={topCategory.id}>
-						{	<p>	<Link href="/blog/[slug]" as={`/blog/${topCategory.nameURL}`}>
-									<a>{topCategory.name}</a>
-								</Link> : ({topCategory.entryCount})
-							</p>
-						}
-					</div>
-				))
-			}
-		</div>
-	)
-}
-
-function LatestComments({homeData}) {
-	return (
-		<div>
-			<h2>Latest Comments</h2>
-			{homeData.latestComments.map(LatestComment => (
-					<div key={LatestComment.entrydiscussionid}>
-						{	<p>	<Link href="/blog/[slug]" as={`/blog/${LatestComment.titleURL}`}>
-									<a>{LatestComment.firstName}</a>
-								</Link> : {LatestComment.commentTeaser}
-								<br />
-								{LatestComment.commentDate} | Replies ({LatestComment.replyCount})<br />
-							</p>
-						}
-					</div>
-				))
-			}
-		</div>
+		<aside>
+			<header>
+				<h3>Latest Posts</h3>
+			</header>
+			{LatestPosts({homeData})}
+		</aside>
 	)
 }
 

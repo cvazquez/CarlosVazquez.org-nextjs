@@ -1,21 +1,81 @@
 // pages/blog/[..slug].js
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetch from 'node-fetch'
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
+import Link from 'next/link'
+import { Container, Row, Col } from 'reactstrap';
+import TopCategories from '../../components/blog/topCategories'
+import LatestPosts from '../../components/blog/latestPosts'
+import LatestComments from '../../components/blog/latestComments'
 
-
-function Post({ post }) {
-	const router = useRouter()
+function Post({ post }, props) {
+	const 	router = useRouter(),
+			homeData = post;
 
 	if(router.isFallback) {
 		return <div>Loading...</div>
 	}
 
 	return (
-		<div>
-			{ReactHtmlParser(post.blogPost.content)}
-		</div>
+		<main>
+			<Head>
+				<title key="title">{post.blogPost.title} - {process.env.global.title}</title>
+			</Head>
+			<Container>
+				<Row xs="1" lg="2">
+					<Col>
+						<article>
+							<header>
+								<h1>{post.blogPost.title}</h1>
+
+								<div className="teaser">
+									{ReactHtmlParser(post.blogPost.teaser)}
+								</div>
+							</header>
+
+							<section className="post">
+								{ReactHtmlParser(post.blogPost.content)}
+							</section>
+
+							<section className="comments">
+								<header>
+									<h2>Comments</h2>
+								</header>
+								{
+									post.postComments.map(comment => (
+										<div key={comment.id}>
+											<span className="comment-name">{comment.firstName} {comment.lastName}</span>
+											<span className="comment-datetime">{comment.postDate} {comment.postTime}</span>
+											<div className="comment-content">
+												{ReactHtmlParser(comment.content)}
+											</div>
+										</div>
+									))
+								}
+							</section>
+						</article>
+					</Col>
+					<Col>
+						{TopCategories({homeData})}
+						{LatestPostsAside({homeData})}
+						{LatestComments({homeData})}
+					</Col>
+				</Row>
+			</Container>
+		</main>
 	);
+}
+
+function LatestPostsAside({homeData}) {
+	return (
+		<aside>
+			<header>
+				<h3>Latest Posts</h3>
+			</header>
+			{LatestPosts({homeData})}
+		</aside>
+	)
 }
 
 export async function getStaticPaths() {

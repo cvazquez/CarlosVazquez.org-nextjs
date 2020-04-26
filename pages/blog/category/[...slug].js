@@ -1,4 +1,5 @@
 // pages/blog/category/[..slug].js
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetch from 'node-fetch'
 import Link from 'next/link'
@@ -12,6 +13,9 @@ function Categories({ category }) {
 
 	return (
 		<div>
+			<Head>
+				<title key="title">{category.category[0].categoryName} - {process.env.global.title}</title>
+			</Head>
 			<h1>{category.category[0].categoryName} Posts</h1>
 			{
 				category.categoryPosts.map(post => (
