@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetch from 'node-fetch'
 import ReactHtmlParser from 'react-html-parser';
-import Link from 'next/link'
 import { Container, Row, Col } from 'reactstrap';
 import TopCategories from '../../components/blog/topCategories'
 import LatestPosts from '../../components/blog/latestPosts'

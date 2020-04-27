@@ -1,24 +1,55 @@
 import Head from 'next/head'
 import fetch from 'node-fetch'
 import Link from 'next/link'
+import { Container, Row, Col } from 'reactstrap';
+import TopCategories from '../../../components/blog/topCategories'
+import LatestPosts from '../../../components/blog/latestPosts'
+import LatestComments from '../../../components/blog/latestComments'
 
 function Categories({categoryData}) {
+	const homeData = categoryData;
+
 	return(
-		<div>
+		<main>
 			<Head>
 				<title key="title">Categories - {process.env.global.title}</title>
 			</Head>
+			<Container>
+				<Row xs="1" lg="2">
+					<Col>
+						<h1>Categories</h1>
+						<section className="categories">
+							{categoryData.categories.map(category => (
+								<div key={category.nameURL}>
+									<p>
+										<Link href="./category/[slug]" as={`./category/${category.nameURL}`}>
+											<a>{category.name}</a>
+										</Link>
+										&nbsp;({category.entryCount})
+									</p>
+								</div>
+							))}
+						</section>
+					</Col>
+					<Col>
+						{TopCategories({homeData})}
+						{LatestPostsAside({homeData})}
+						{LatestComments({homeData})}
+					</Col>
+				</Row>
+			</Container>
+		</main>
+	)
+}
 
-			{categoryData.categories.map(category => (
-				<div key={category.nameURL}>
-					<p>
-						<Link href="./category/[slug]" as={`./category/${category.nameURL}`}>
-							<a>{category.name}</a>
-						</Link>
-					</p>
-				</div>
-			))}
-		</div>
+function LatestPostsAside({homeData}) {
+	return (
+		<aside>
+			<header>
+				<h3>Latest Posts</h3>
+			</header>
+			{LatestPosts({homeData})}
+		</aside>
 	)
 }
 
