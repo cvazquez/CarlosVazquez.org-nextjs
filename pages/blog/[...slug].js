@@ -7,6 +7,7 @@ import { Container, Row, Col } from 'reactstrap';
 import TopCategories from '../../components/blog/topCategories'
 import LatestPosts from '../../components/blog/latestPosts'
 import LatestComments from '../../components/blog/latestComments'
+import CommentForm from "../../components/blog/commentForm"
 
 function Post({ post }, props) {
 	const 	router = useRouter(),
@@ -41,6 +42,9 @@ function Post({ post }, props) {
 								<header>
 									<h2>Comments</h2>
 								</header>
+								<CommentForm id={post.blogPost.id} />
+
+
 								{
 									post.postComments.map(comment => (
 										<div key={comment.id}>
