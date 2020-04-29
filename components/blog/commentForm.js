@@ -3,15 +3,21 @@ class CommentForm extends React.Component {
 	constructor(props) {
 		super(props);
 
+		const replyTo = props.commentId !== null && !isNaN(props.commentId);
+
 		this.state = {
-			firstName	: '',
-			lastName	: '',
-			email		: '',
-			comment		: '',
-			emailReply	: '',
-			id			: props.id
+			firstName		: '',
+			lastName		: '',
+			email			: '',
+			comment			: '',
+			emailReply		: '',
+			id				: props.blogPostId,
+			commentId		: props.commentId,
+			commentLegend	: replyTo ? "Reply To Comment" : "New Comment",
+			replyTo			: replyTo
 		};
 
+		console.log(props)
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -34,20 +40,16 @@ class CommentForm extends React.Component {
 		});
 	}
 
+	componentDidMount() {
+	}
+
 	render() {
 		return (
 			<div id="CommentBlockContainer">
 				<div id="CommentBlock">
 					<form method="post" name="CommentSave" onSubmit={this.handleSubmit}>
-
-						<input	id				= "authenticityToken"
-								name			= "authenticityToken"
-								type			= "hidden"
-								defaultValue	= "qosxm7i57dn8qymonli4jqumylxvxeuk1nbgjgpg"
-						/>
-
 						<fieldset>
-							<legend id="NewCommentLegend">New Comment</legend>
+							<legend id="NewCommentLegend">{this.state.commentLegend}</legend>
 							<label htmlFor="NewEntryCommentObject-firstName">First Name</label>
 							<span id="NewEntryCommentObject-firstName-error" className="NewEntryCommentObjectError"></span>
 							<br />
@@ -112,18 +114,21 @@ class CommentForm extends React.Component {
 									onChange		= {this.handleChange}
 							/>
 							<label htmlFor="NewEntryCommentObject-emailReply">&nbsp;Email me replies to this thread</label>
-							<br /><br />
+							<br />
 
 							<div>
-								<input	id				= "entryDiscussionId"
-										name			= "entryDiscussionId"
-										type			= "hidden"
-										defaultValue	= ""
-								/>
+								{
+									this.state.replyTo &&
+										<input	id				= "entryDiscussionId"
+												name			= "entryDiscussionId"
+												type			= "hidden"
+												value			= {this.state.commentId}
+										/>
+								}
 
-								<input	id				= "CommentSubmitButton"
-										type			= "submit"
-										defaultValue	= "Post Comment"
+								<input	id		= "CommentSubmitButton"
+										type	= "submit"
+										value	= {this.state.replyTo ? "Reply" : "Post Comment"}
 								/>
 							</div>
 						</fieldset>
