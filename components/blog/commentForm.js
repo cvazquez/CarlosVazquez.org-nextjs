@@ -17,7 +17,6 @@ class CommentForm extends React.Component {
 			replyTo			: replyTo
 		};
 
-		console.log(props)
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -38,9 +37,6 @@ class CommentForm extends React.Component {
 		this.setState({
 			[event.target.name]	: event.target.value
 		});
-	}
-
-	componentDidMount() {
 	}
 
 	render() {
