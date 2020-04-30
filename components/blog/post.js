@@ -5,6 +5,7 @@ import CommentForm from "./commentForm"
 import TopCategories from "./topCategories"
 import LatestPosts from "./latestPosts"
 import LatestComments from "./latestComments"
+import Comments from "../../components/blog/comments"
 
 
 class Post extends React.Component {
@@ -13,17 +14,8 @@ class Post extends React.Component {
 		super(props);
 
 		this.state = {
-			post				: props.post,
-			replyLinkClicked	: false
+			post				: props.post
 		};
-
-		this.handleReplyLinkCicked = this.handleReplyLinkCicked.bind(this);
-	}
-
-	handleReplyLinkCicked() {
-		this.setState({
-			replyLinkClicked	: true
-		})
 	}
 
 	displayCommentForm(blogPostId, commentId) {
@@ -70,42 +62,7 @@ class Post extends React.Component {
 									{ReactHtmlParser(post.blogPost.content)}
 								</section>
 
-								<section className="comments">
-									<header>
-										<h2>Comments</h2>
-									</header>
-									{
-										post.postComments.map(comment => (
-											<div	key	= {comment.id}
-													style	= {{margin: "10px 0px"}}>
-												<span className="comment-name">{comment.firstName} {comment.lastName}</span>
-												<span className="comment-datetime">{comment.postDate} {comment.postTime}</span>
-												<div className="comment-content">
-													{ReactHtmlParser(comment.content)}
-												</div>
-
-												<div className="BlogCommentUserCommentReply">
-													<span	className	= "BlogCommentUserCommentCancelText"
-															style	= {{display: "none"}}>
-														Cancel Reply
-														<br /><br />
-													</span>
-													<span	className	= "BlogCommentUserCommentReplyText"
-															onClick		= {this.handleReplyLinkCicked}
-															style	= {{display: "inline",
-																		color: "#FFA500",
-																		fontSize: ".8em"}}
-													>
-														Reply
-													</span>
-													{this.state.replyLinkClicked && this.displayCommentForm(post.blogPost.id, comment.id)}
-												</div>
-											</div>
-										))
-									}
-
-									{this.displayCommentForm(post.blogPost.id, null)}
-								</section>
+								<Comments post	= {post} />
 							</article>
 						</Col>
 						<Col>
