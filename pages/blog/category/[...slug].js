@@ -7,6 +7,7 @@ import { Container, Row, Col } from 'reactstrap';
 import TopCategories from '../../../components/blog/topCategories'
 import LatestPosts from '../../../components/blog/latestPosts'
 import LatestComments from '../../../components/blog/latestComments'
+import Layout from "../../../components/blog/layouts/Layout";
 
 function Categories({ category }) {
 	const	router = useRouter(),
@@ -17,7 +18,7 @@ function Categories({ category }) {
 	}
 
 	return (
-		<main>
+		<Layout>
 			<Head>
 				<title key="title">{category.category[0].categoryName} - {process.env.global.title}</title>
 			</Head>
@@ -48,7 +49,7 @@ function Categories({ category }) {
 					</Col>
 				</Row>
 			</Container>
-		</main>
+		</Layout>
 	);
 }
 

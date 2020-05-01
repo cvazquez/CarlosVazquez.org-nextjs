@@ -1,15 +1,16 @@
 // pages/blog/[..slug].js
 import fetch from 'node-fetch'
 import Post from '../../components/blog/post'
+import Layout from "../../components/blog/layouts/Layout";
 
 
 function PostPage({ post }, props) {
 
 	return (
-		<div>
+		<Layout>
 			<Post	post	= {post}
 					props	= {props}/>
-		</div>
+		</Layout>
 	)
 }
 

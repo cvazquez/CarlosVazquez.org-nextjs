@@ -1,0 +1,112 @@
+// https://www.color-blindness.com/color-name-hue/
+$color-knight-rider: #333;
+$color-silver: silver;
+$color-white: white;
+$color-black: black;
+$color-midgrey: #686a6f;
+$color-orange: #FFA500;
+
+$separator-color: $color-silver;
+$primary-text-color: $color-knight-rider;
+$border-light-color: $separator-color;
+$background-color: $color-white;
+$separator-border-color: $separator-color;
+$a-hover-color: $color-black;
+$a-visited: $color-midgrey;
+$a-link: $color-midgrey;
+
+body {
+	padding: 20px 0px 60px;
+	margin: 0;
+	color: $primary-text-color;
+
+	a:visited {
+		color: $a-visited;
+		text-decoration: none;
+	}
+
+	a:link {
+		color: $a-visited;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: $a-hover-color;
+	}
+
+	.blog-header {
+		background-color: $background-color;
+		width: 100%;
+		height: 110px;
+		border-bottom: 1px solid $border-light-color;
+		padding: 0px 0px;
+		margin-bottom: 50px;
+
+		.header-logo {
+			float: left;
+			text-align: center;
+		}
+
+		ul.header-nav {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+
+			li {
+				display: inline;
+
+				a {
+
+					text-align: center;
+					margin: 14px 16px;
+					text-decoration: none;
+				}
+
+				a:hover {
+					color: $a-hover-color;
+				}
+
+				.external-links {
+					float : right;
+				}
+			}
+		}
+	}
+
+	.nav-bar {
+		width: 100%;
+		height: 60px;
+	}
+
+	.Content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+
+		.comment-container {
+			margin: 10px 0px;
+
+			.comment-reply {
+				.comment-reply-content {
+					margin: 10px 0px 10px 25px;
+				}
+
+				.comment-reply-info {
+					float: right;
+				}
+			}
+
+			.comment-reply-cancel-text {
+				display: inline;
+				color: $color-orange;
+				font-size: .8em;
+			}
+
+			.comment-separator {
+				border: 1px solid $separator-border-color;
+				margin: 10px;
+			}
+		}
+	}
+}

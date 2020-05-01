@@ -5,12 +5,13 @@ import { Container, Row, Col } from 'reactstrap';
 import TopCategories from '../../../components/blog/topCategories'
 import LatestPosts from '../../../components/blog/latestPosts'
 import LatestComments from '../../../components/blog/latestComments'
+import Layout from "../../../components/blog/layouts/Layout";
 
 function Categories({categoryData}) {
 	const homeData = categoryData;
 
 	return(
-		<main>
+		<Layout>
 			<Head>
 				<title key="title">Categories - {process.env.global.title}</title>
 			</Head>
@@ -38,7 +39,7 @@ function Categories({categoryData}) {
 					</Col>
 				</Row>
 			</Container>
-		</main>
+		</Layout>
 	)
 }
 

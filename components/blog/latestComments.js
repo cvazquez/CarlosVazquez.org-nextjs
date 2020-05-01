@@ -15,7 +15,8 @@ function LatestComments({homeData}) {
 							</Link>
 							: {latestComment.commentTeaser}
 							<br />
-							{latestComment.commentDate} | Replies ({latestComment.replyCount})
+							{latestComment.commentDate}
+							{latestComment.replyCount > 0 && ` | ${latestComment.replyCount} Replies`}
 						</li>
 					</div>
 				))}

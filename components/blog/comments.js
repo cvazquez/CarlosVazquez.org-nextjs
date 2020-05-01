@@ -65,8 +65,8 @@ class Comments extends React.Component {
 
 		return(
 			comments.map(comment => (
-				<div	key		= {comment.id}
-						style	= {{margin: "10px 0px"}}>
+				<div	key			= {comment.id}
+						className	= "comment-container">
 					<span className="comment-name">{comment.firstName} {comment.lastName}</span>
 					&nbsp;--&nbsp;
 					<span className="comment-datetime">{comment.postDate} {comment.postTime}</span>
@@ -75,32 +75,29 @@ class Comments extends React.Component {
 					</div>
 					<div className="comment-replies">
 						{comment.id in replies &&
-							<div style={{margin: "10px 0px 10px 25px"}}>
-								{ReactHtmlParser(replies[comment.id].content)}
-								<br />
-								<div style={{float:"right"}}>
-									{replies[comment.id].firstName} {replies[comment.id].lastName} -- {replies[comment.id].postDate} {replies[comment.id].postTIme}
+							<div className="comment-reply">
+								<div className="comment-reply-content">
+									{ReactHtmlParser(replies[comment.id].content)}
+									<br />
+									<div className="comment-reply-info">
+										{replies[comment.id].firstName} {replies[comment.id].lastName} -- {replies[comment.id].postDate} {replies[comment.id].postTIme}
+									</div>
 								</div>
 							</div>
 						}
 					</div>
 
 					<div className="BlogCommentUserCommentReply">
-						<span	className	= "BlogCommentUserCommentReplyText"
+						<span	className	= "comment-reply-cancel-text"
 								name		= "commentId"
 								data-id		= {comment.id}
-								onClick		= {this.handleReplyLinkCicked}
-								style	= {{display: "inline",
-											color: "#FFA500",
-											fontSize: ".8em"}}
-						>
+								onClick		= {this.handleReplyLinkCicked}>
 							{this.state.comments[comment.id].replyText}
 						</span>
 						{this.state.comments[comment.id].replyLinkClicked && this.displayCommentForm(this.state.post.blogPost.id, comment.id)}
 					</div>
 
-					<div style={{	border: "1px solid silver",
-									margin: "10px"}}></div>
+					<div className="comment-separator"></div>
 				</div>
 			))
 		)

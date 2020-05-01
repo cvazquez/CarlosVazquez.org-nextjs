@@ -1,18 +1,13 @@
-import Head from 'next/head'
 import fetch from 'node-fetch'
 import { Container, Row, Col } from 'reactstrap';
 import TopCategories from '../../components/blog/topCategories'
 import LatestPosts from '../../components/blog/latestPosts'
 import LatestComments from '../../components/blog/latestComments'
+import Layout from "../../components/blog/layouts/Layout";
 
 function Index({homeData}) {
 	return (
-		<main>
-			<Head>
-				<title>{process.env.global.title}</title>
-				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-			</Head>
-
+		<Layout>
 			<Container>
 				<Row>
 					<Col>
@@ -25,7 +20,7 @@ function Index({homeData}) {
 					</Col>
 				</Row>
 			</Container>
-		</main>
+		</Layout>
 	)
 }
 

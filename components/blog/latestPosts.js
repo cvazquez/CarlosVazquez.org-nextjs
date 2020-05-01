@@ -10,7 +10,8 @@ function LatestPosts({homeData}) {
 								<a>{latestPost.title}</a>
 							</Link>
 							<br />
-							{latestPost.publishDate} | Comments ({latestPost.commentCount})
+							{latestPost.publishDate}
+							{latestPost.commentCount > 0 && ` | ${latestPost.commentCount} Comments`}
 						</li>
 					</div>
 				))}
