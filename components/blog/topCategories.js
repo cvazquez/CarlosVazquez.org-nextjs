@@ -17,13 +17,12 @@ function TopCategories({homeData}) {
 						</div>
 					</li>
 				))}
+				<li>
+					<Link href="/blog/categories" as={`/blog/categories`}>
+						<a>All Categories</a>
+					</Link>
+				</li>
 			</ul>
-
-			<div>
-				<Link href="/blog/categories" as={`/blog/categories`}>
-					<a>All Categories</a>
-				</Link>
-			</div>
 		</aside>
 	)
 }

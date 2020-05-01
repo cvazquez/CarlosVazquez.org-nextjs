@@ -78,7 +78,6 @@ class Comments extends React.Component {
 							<div className="comment-reply">
 								<div className="comment-reply-content">
 									{ReactHtmlParser(replies[comment.id].content)}
-									<br />
 									<div className="comment-reply-info">
 										{replies[comment.id].firstName} {replies[comment.id].lastName} -- {replies[comment.id].postDate} {replies[comment.id].postTIme}
 									</div>

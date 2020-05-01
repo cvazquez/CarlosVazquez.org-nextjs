@@ -14,9 +14,10 @@ function LatestComments({homeData}) {
 								<a>{latestComment.firstName}</a>
 							</Link>
 							: {latestComment.commentTeaser}
-							<br />
-							{latestComment.commentDate}
-							{latestComment.replyCount > 0 && ` | ${latestComment.replyCount} Replies`}
+							<div className="aside-sub-section">
+								{latestComment.commentDate}
+								{latestComment.replyCount > 0 && ` | ${latestComment.replyCount} Replies`}
+							</div>
 						</li>
 					</div>
 				))}

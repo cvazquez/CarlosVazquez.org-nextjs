@@ -53,93 +53,78 @@ class CommentForm extends React.Component {
 	render() {
 		if(this.state.commentPosted) {
 			return (
-				<div>Your {this.state.replyToComment ? "Reply" : "Comment"} has been posted.</div>
+				<div className="comment-posted">Thank you! Your {this.state.replyToComment ? "reply" : "comment"} has been saved and I am reviewing it for public display.</div>
 			)
 		} else {
 			return (
-				<div id="CommentBlockContainer">
-					<div id="CommentBlock">
-						<form method="post" name="CommentSave" onSubmit={this.handleSubmit}>
+				<div className="comment-form-container">
+					<div>
+						<form method="post"onSubmit={this.handleSubmit}>
 							<fieldset>
-								<legend id="NewCommentLegend">{this.state.commentLegend}</legend>
-								<label htmlFor="NewEntryCommentObject-firstName">First Name</label>
-								<span id="NewEntryCommentObject-firstName-error" className="NewEntryCommentObjectError"></span>
-								<br />
-								<input 	id			= "NewEntryCommentObject-firstName"
+								<legend>{this.state.commentLegend}</legend>
+
+								<input 	id			= "firstName"
 										maxLength	= "50"
 										name		= "firstName"
 										required	= "required"
 										type		= "text"
 										value		= {this.state.firstName}
 										onChange	= {this.handleChange}
+										placeholder	= "First Name"
 								/>
-								<br /><br />
 
-								<label htmlFor="NewEntryCommentObject-lastName">Last Name</label>
-								<span id="NewEntryCommentObject-lastName-error" className="NewEntryCommentObjectError"></span>
-								<br />
-								<input	id			= "NewEntryCommentObject-lastName"
+								<input	id			= "lastName"
 										maxLength	= "50"
 										name		= "lastName"
 										required	= "required"
 										type		= "text"
 										value		= {this.state.lastName}
 										onChange	= {this.handleChange}
+										placeholder	= "Last Name"
 								/>
-								<br /><br />
 
-								<label htmlFor="NewEntryCommentObject-email">Email</label>
-								<span id="NewEntryCommentObject-email-error" className="NewEntryCommentObjectError"></span>
-								<br />
-								<input	id			= "NewEntryCommentObject-email"
+								<input	id			= "email"
 										maxLength	= "255"
 										name		= "email"
 										required	= "required"
-										size		= "50"
-										type		= "text"
+										type		= "email"
 										value		= {this.state.email}
 										onChange	= {this.handleChange}
+										placeholder	= "Email"
 								/>
-								<br /><br />
 
-								<label htmlFor="NewEntryCommentObject-comment">Comment</label>
-								<span id='NewEntryCommentObject-comment-error' className='NewEntryCommentObjectError'></span>
-								<br />
-								<textarea	id			= "NewEntryCommentObject-comment"
+								<textarea	id			= "comment"
 											name		= "comment"
 											required	= "required"
 											value		= {this.state.comment}
 											onChange	= {this.handleChange}
+											placeholder	="Comments"
 								/>
-								<br /><br />
 
-								<input 	id				= "NewEntryCommentObject-emailReply"
+								<input 	id				= "emailReply"
 										name			= "emailReply"
 										type			= "checkbox"
 										defaultValue	= "1"
 										onChange		= {this.handleChange}
 								/>
-								<input	id				= "NewEntryCommentObject-emailReply-checkbox"
+								<input	id				= "emailReply-checkbox"
 										name			= "emailReply"
 										type			= "hidden"
 										defaultValue	= "0"
 										onChange		= {this.handleChange}
 								/>
-								<label htmlFor="NewEntryCommentObject-emailReply">&nbsp;Email me replies to this thread</label>
-								<br />
+								<label htmlFor="emailReply">&nbsp;Email me replies to this thread</label>
 
 								<div>
 									{
 										this.state.replyToComment &&
-											<input	id				= "entryDiscussionId"
-													name			= "entryDiscussionId"
-													type			= "hidden"
-													value			= {this.state.commentId}
+											<input	name	= "entryDiscussionId"
+													type	= "hidden"
+													value	= {this.state.commentId}
 											/>
 									}
 
-									<input	id		= "CommentSubmitButton"
-											type	= "submit"
+									<input	type	= "submit"
 											value	= {this.state.replyToComment ? "Reply" : "Post Comment"}
 									/>
 								</div>

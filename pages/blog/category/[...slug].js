@@ -23,26 +23,27 @@ function Categories({ category }) {
 				<title key="title">{category.category[0].categoryName} - {process.env.global.title}</title>
 			</Head>
 			<Container>
-				<Row xs="1" lg="2">
-					<Col>
+				<Row>
+					<Col xs="12" md="8">
 						<h1>{category.category[0].categoryName} Posts</h1>
+
+						<section className="category-posts">
 						{
 							category.categoryPosts.map(post => (
-								<div key={post.titleURL}>
-									<p>
-										<Link href="../{post.titleURL}" as={`../${post.titleURL}`}>
-											<a>{post.title}</a>
-										</Link>
-										<br/>
+								<div key={post.titleURL} className="category-post">
+									<Link href="../{post.titleURL}" as={`../${post.titleURL}`}>
+										<a>{post.title}</a>
+									</Link>
+									<div className="publish-date">
 										{post.publishDate}
-										<br />
-										{post.contentTeaser}
-									</p>
+									</div>
+									{post.contentTeaser}
 								</div>
 							))
 						}
+						</section>
 					</Col>
-					<Col>
+					<Col xs="12" md="4" className="aside">
 						{TopCategories({homeData})}
 						{LatestPostsAside({homeData})}
 						{LatestComments({homeData})}

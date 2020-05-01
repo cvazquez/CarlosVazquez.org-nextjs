@@ -47,8 +47,8 @@ class Post extends React.Component {
 				</Head>
 
 				<Container>
-					<Row xs="1" lg="2">
-						<Col>
+					<Row>
+						<Col xs="12" md="8">
 							<article>
 								<header>
 									<h1>{post.blogPost.title}</h1>
@@ -65,7 +65,7 @@ class Post extends React.Component {
 								<Comments post	= {post} />
 							</article>
 						</Col>
-						<Col>
+						<Col xs="12" md="4">
 							{TopCategories({homeData})}
 							{this.LatestPostsAside({homeData})}
 							{LatestComments({homeData})}
