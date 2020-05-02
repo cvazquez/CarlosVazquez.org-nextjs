@@ -27,7 +27,7 @@ class CommentForm extends React.Component {
 		event.preventDefault();
 
 		// Save comment to database
-		fetch("http://dev.react-api.carlosvazquez.org/blog/api/postComment", {
+		fetch("/api/postComment", {
 							method	: 'POST',
 							body	: JSON.stringify(this.state),
 							headers	: {	'Content-Type': 'application/json'}

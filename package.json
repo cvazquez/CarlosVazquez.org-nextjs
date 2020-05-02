@@ -1,11 +1,16 @@
 {
-  "name": "app-next",
+  "name": "adventures-of-carlos",
+  "author": {
+				  "name": "Carlos Vaqzuez",
+				  "email": "cvazquez1976@gmail.com",
+				  "url": "http://www.carlosvazquez.org"
+			},
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3003",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 3003"
   },
   "dependencies": {
     "bootstrap": "^4.4.1",

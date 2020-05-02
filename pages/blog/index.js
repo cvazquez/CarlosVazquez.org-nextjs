@@ -6,7 +6,6 @@ import LatestComments from '../../components/blog/latestComments'
 import Layout from "../../components/blog/layouts/Layout";
 
 function Index({homeData}) {
-	console.log(homeData)
 	return (
 		<Layout>
 			<Container>
