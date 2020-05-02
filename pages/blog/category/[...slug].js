@@ -66,25 +66,24 @@ function LatestPostsAside({homeData}) {
 }
 
 export async function getStaticPaths() {
-  const	res = await fetch("http://dev.react-api.carlosvazquez.org/blog/api/getCategoriesPage", {
+	const	res = await fetch("http://dev.react-api.carlosvazquez.org/blog/api/getCategoriesPage", {
 						method:	'GET',
 						cache:	'force-cache'
 					}
-			),
-		page  = await res.json();
-
-  const paths = page.categories.map(category => `/blog/category/${category.nameURL}`)
+				),
+			page  = await res.json(),
+			paths = page.categories.map(category => `/blog/category/${category.nameURL}`)
 
   return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-  const	res = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api/getCategoryPageByName/${params.slug}`, {
+	const	res = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api/getCategoryPageByName/${params.slug}`, {
 						method:	'GET',
 						cache:	'force-cache'
 					}
 			),
-		category = await res.json();
+			category = await res.json();
 
   return { props: { category } }
 }

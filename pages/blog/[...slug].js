@@ -16,25 +16,23 @@ function PostPage({ post }, props) {
 
 
 export async function getStaticPaths() {
-  const	res = await fetch("http://dev.react-api.carlosvazquez.org/blog/api/getPostSlugs", {
+	const	res = await fetch("http://dev.react-api.carlosvazquez.org/blog/api/getPostSlugs", {
 						method:	'GET',
 						cache:	'force-cache'
 					}
-			),
-		posts  = await res.json();
-
-  const paths = posts.postSlugs.map(post => `/blog/${post.titleURL}`)
+				),
+			posts  = await res.json(),
+			paths = posts.postSlugs.map(post => `/blog/${post.titleURL}`);
 
   return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-  const	res = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api/getPostPageByTitleURL/${params.slug}`, {
-						method:	'GET',
-						cache:	'force-cache'
+	const	res = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api/getPostPageByTitleURL/${params.slug}`, {
+						method:	'GET'
 					}
-			),
-		post = await res.json();
+				),
+			post = await res.json();
 
   return { props: { post } }
 }
