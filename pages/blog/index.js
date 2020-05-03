@@ -60,11 +60,7 @@ function LatestPostsAside({homeData}) {
 }
 
 export async function getStaticProps() {
-	const	homeRes = await fetch("http://dev.react-api.carlosvazquez.org/blog/api", {
-						method:	'GET',
-						cache:	'force-cache'
-					}
-			),
+	const	homeRes = await fetch(`${process.env.global.apiURL}/blog/api`),
 			homeData = await homeRes.json();
 
 	return {

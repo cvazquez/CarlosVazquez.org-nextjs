@@ -65,7 +65,7 @@ function LatestPostsAside({homeData}) {
 }
 
 export async function getStaticPaths() {
-	const	res = await fetch("http://dev.react-api.carlosvazquez.org/blog/api/getCategoriesPage"),
+	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getCategoriesPage`),
 			page  = await res.json(),
 			paths = page.categories.map(category => `/blog/category/${category.nameURL}`)
 
@@ -73,11 +73,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const	res = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api/getCategoryPageByName/${params.slug}`, {
-						method:	'GET',
-						cache:	'force-cache'
-					}
-			),
+	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getCategoryPageByName/${params.slug}`),
 			category = await res.json();
 
   return { props: { category } }

@@ -53,7 +53,7 @@ class CommentForm extends React.Component {
 	render() {
 		if(this.state.commentPosted) {
 			return (
-				<div className="comment-posted">Thank you! Your {this.state.replyToComment ? "reply" : "comment"} has been saved and I am reviewing it for public display.</div>
+				<div className="comment-posted">Thank you! Your {this.state.replyToComment ? "reply" : "comment"} has been saved and I am reviewing them for public display.</div>
 			)
 		} else {
 			return (

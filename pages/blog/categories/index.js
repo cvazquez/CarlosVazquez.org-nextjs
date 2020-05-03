@@ -55,10 +55,7 @@ function LatestPostsAside({homeData}) {
 }
 
 export async function getStaticProps() {
-	const	categoryRes		= await fetch("http://dev.react-api.carlosvazquez.org/blog/api/getCategoriesPage", {
-								method:	'GET',
-								cache:	'force-cache'
-			}),
+	const	categoryRes		= await fetch(`${process.env.global.apiURL}/blog/api/getCategoriesPage`),
 			categoryData	= await categoryRes.json();
 
 	return {

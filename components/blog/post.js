@@ -52,10 +52,6 @@ class Post extends React.Component {
 							<article>
 								<header>
 									<h1>{post.blogPost.title}</h1>
-
-									<div className="teaser">
-										{ReactHtmlParser(post.blogPost.teaser)}
-									</div>
 								</header>
 
 								<section className="post">

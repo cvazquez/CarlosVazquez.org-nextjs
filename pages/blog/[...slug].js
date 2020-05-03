@@ -16,11 +16,7 @@ function PostPage({ post }, props) {
 
 
 export async function getStaticPaths() {
-	const	res = await fetch("http://dev.react-api.carlosvazquez.org/blog/api/getPostSlugs", {
-						method:	'GET',
-						cache:	'force-cache'
-					}
-				),
+	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getPostSlugs`),
 			posts  = await res.json(),
 			paths = posts.postSlugs.map(post => `/blog/${post.titleURL}`);
 
@@ -28,10 +24,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const	res = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api/getPostPageByTitleURL/${params.slug}`, {
-						method:	'GET'
-					}
-				),
+	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getPostPageByTitleURL/${params.slug}`),
 			post = await res.json();
 
   return { props: { post } }
