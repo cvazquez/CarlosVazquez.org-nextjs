@@ -1,10 +1,10 @@
 {
   "name": "adventures-of-carlos",
   "author": {
-				  "name": "Carlos Vaqzuez",
-				  "email": "cvazquez1976@gmail.com",
-				  "url": "http://www.carlosvazquez.org"
-			},
+    "name": "Carlos Vaqzuez",
+    "email": "cvazquez1976@gmail.com",
+    "url": "http://www.carlosvazquez.org"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
