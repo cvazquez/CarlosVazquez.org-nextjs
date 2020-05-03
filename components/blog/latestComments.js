@@ -10,7 +10,7 @@ function LatestComments({homeData}) {
 				{homeData.latestComments.map(latestComment => (
 					<div key={latestComment.entrydiscussionid}>
 						<li>
-							<Link href="/blog/{latestComment.titleURL}" as={`/blog/${latestComment.titleURL}`}>
+							<Link href="/blog/[...slug]" as={`/blog/${latestComment.titleURL}`}>
 								<a>{latestComment.firstName}</a>
 							</Link>
 							: {latestComment.commentTeaser}

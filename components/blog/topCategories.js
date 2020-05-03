@@ -10,7 +10,7 @@ function TopCategories({homeData}) {
 				{homeData.topCategories.map(category => (
 					<li key={category.id}>
 						<div>
-							<Link href="/blog/category/{category.nameURL}" as={`/blog/category/${category.nameURL}`}>
+							<Link href={`/blog/category/[...slug]`} as={`/blog/category/${category.nameURL}`}>
 								<a>{category.name}</a>
 							</Link>
 							&nbsp;({category.entryCount})

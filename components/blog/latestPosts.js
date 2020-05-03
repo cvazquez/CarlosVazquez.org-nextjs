@@ -7,7 +7,7 @@ function LatestPosts({homeData}) {
 					{homeData.latestPosts.map(latestPost => (
 						<div key={latestPost.id}>
 							<li>
-								<Link href="/blog/{latestPost.titleURL}" as={`/blog/${latestPost.titleURL}`}>
+								<Link href="/blog/[...slug]" as={`/blog/${latestPost.titleURL}`}>
 									<a>{latestPost.title}</a>
 								</Link>
 

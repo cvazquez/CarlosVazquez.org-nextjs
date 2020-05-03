@@ -23,7 +23,7 @@ function Categories({categoryData}) {
 							{categoryData.categories.map(category => (
 								<div key={category.nameURL}>
 									<p>
-										<Link href="./category/[slug]" as={`./category/${category.nameURL}`}>
+										<Link href="./category/[...slug]" as={`./category/${category.nameURL}`}>
 											<a>{category.name}</a>
 										</Link>
 										&nbsp;({category.entryCount})
