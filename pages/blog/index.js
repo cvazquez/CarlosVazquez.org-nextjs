@@ -13,15 +13,14 @@ function Index({homeData}) {
 					<Col xs="12" md="8">
 						<main>
 							<header>
-								<h1>Welcome To My Portfolio</h1>
+								<h1>Welcome To My Portfolio And Adventures Blog</h1>
 							</header>
 
 							<article>
-								<p>My name is Carlos and I am a FullStack Website Developer. Outside of coding, I enjoy living an active and healthy lifestyle, through travelling, running, bikng, and other outdoor and physical activites.</p>
-								<p>I developed this website using React and Node.js, on the Next.JS framework.
+								<p>My name is Carlos and I am a FullStack Website Developer. I developed this website using React and Node.js, on the Next.JS framework.
 									And I created a simple Node.JS Express API communicating with MySQL, where these blog posts are stored.</p>
 								<p>I plan to showcase projects I developed during my career as a FullStack Website Developer, in addition to personal projects, including the code for this blog.</p>
-								<p>I also post about the various adventures I've been on, from international vacations to a 50 mile Ultra Marathon.</p>
+								<p>Outside of coding, I enjoy living an active and healthy lifestyle, through travelling, running, bikng, and other outdoor and physical activites. I will try to post about the various adventures I've been on, from international vacations to a 50 mile Ultra Marathon.</p>
 								<p>Checkout my various blog post categories and latest blogs for more information.</p>
 							</article>
 						</main>
