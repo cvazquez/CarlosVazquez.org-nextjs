@@ -42,6 +42,22 @@ body {
 		border-bottom: $separator-border-width $separator-border-style $a-hover-underline;
 	}
 
+	h1 {
+		margin-bottom: 1.75rem;
+	}
+
+	h2 {
+		margin-bottom: 1.5rem;
+	}
+
+	h3 {
+		font-size: 1.25rem;
+	}
+
+	h4 {
+		font-size: 1rem;
+	}
+
 	.blog-header {
 		background-color: $background-color;
 		width: 100%;
@@ -86,6 +102,18 @@ body {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
+
+		.post {
+			a {
+				color: #536DA7;
+				font-weight: 600;
+			}
+		}
+
+		.comments {
+			margin-top: 30px;
+		}
+
 
 		.comment-container {
 			margin: 10px 0px;
