@@ -29,7 +29,8 @@ const navLinks = [
 		slug	: "Portfolio"
 	}
 ],
-	Header = () => (
+
+Header = () => (
 	<div className="blog-header">
 		<Container>
 			<Row>

@@ -36,17 +36,6 @@ function Index({homeData}) {
 	)
 }
 
-function LatestPostsMain({homeData}) {
-	return (
-		<article>
-			<header>
-				<h1>Latest Posts</h1>
-			</header>
-			{LatestPosts({homeData})}
-		</article>
-	)
-}
-
 function LatestPostsAside({homeData}) {
 	return (
 		<aside>
@@ -59,7 +48,7 @@ function LatestPostsAside({homeData}) {
 }
 
 export async function getStaticProps() {
-	const	homeRes = await fetch(`${process.env.global.apiURL}/blog/api`),
+	const	homeRes = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api`),
 			homeData = await homeRes.json();
 
 	return {

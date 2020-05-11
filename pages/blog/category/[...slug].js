@@ -30,7 +30,7 @@ function Categories({ category }) {
 						{
 							category.categoryPosts.map(post => (
 								<div key={post.titleURL} className="category-post">
-									<Link href="../[...slug]" as={`../${post.titleURL}`}>
+									<Link href="/blog/[...slug]" as={`/blog/${post.titleURL}`}>
 										<a>{post.title}</a>
 									</Link>
 									<div className="publish-date">
@@ -65,16 +65,16 @@ function LatestPostsAside({homeData}) {
 }
 
 export async function getStaticPaths() {
-	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getCategoriesPage`),
-			page  = await res.json(),
-			paths = page.categories.map(category => `/blog/category/${category.nameURL}`)
+	const	res		= await fetch(`${process.env.global.apiURL}/blog/api/getCategoriesPage`),
+			page	= await res.json(),
+			paths	= page.categories.map(category => `/blog/category/${category.nameURL}`)
 
   return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getCategoryPageByName/${params.slug}`),
-			category = await res.json();
+	const	res			= await fetch(`${process.env.global.apiURL}/blog/api/getCategoryPageByName/${params.slug}`),
+			category	= await res.json();
 
   return { props: { category } }
 }

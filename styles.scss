@@ -6,6 +6,8 @@ $color-black: black;
 $color-midgrey: #686a6f;
 $color-orange: #FFA500;
 $color-grape: #43414e;
+$color-san-marino: #536DA7;
+
 
 $primary-text-color: $color-knight-rider;
 $separator-color: $color-silver;
@@ -16,6 +18,8 @@ $a-hover-color: $color-black;
 $a-hover-underline: $color-grape;
 $a-visited: $color-midgrey;
 $a-link: $color-midgrey;
+$a-link-color: $color-san-marino;
+$a-link-weight: 600px;
 
 $separator-border-width: 1px;
 $separator-border-style: solid;
@@ -105,15 +109,32 @@ body {
 
 		.post {
 			a {
-				color: #536DA7;
-				font-weight: 600;
+				color: $a-link-color;
+				font-weight: $a-link-weight;
+			}
+		}
+
+		.series-posts {
+			ul {
+				list-style-type: none;
+				padding-left: 5px;
+
+				li {
+					list-style-type: none;
+					margin-bottom: 15px;
+					width: 75%;
+
+					a {
+						color: $a-link-color;
+						font-weight: $a-link-weight;
+					}
+				}
 			}
 		}
 
 		.comments {
 			margin-top: 30px;
 		}
-
 
 		.comment-container {
 			margin: 10px 0px;

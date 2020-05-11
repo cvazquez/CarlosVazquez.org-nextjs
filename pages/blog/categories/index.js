@@ -9,7 +9,6 @@ import Layout from "../../../components/blog/layouts/Layout";
 
 function Categories({categoryData}) {
 	const homeData = categoryData;
-
 	return(
 		<Layout>
 			<Head>
@@ -23,7 +22,7 @@ function Categories({categoryData}) {
 							{categoryData.categories.map(category => (
 								<div key={category.nameURL}>
 									<p>
-										<Link href="./category/[...slug]" as={`./category/${category.nameURL}`}>
+										<Link href="/blog/category/[...slug]" as={`/blog/category/${category.nameURL}`}>
 											<a>{category.name}</a>
 										</Link>
 										&nbsp;({category.entryCount})

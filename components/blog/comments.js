@@ -3,9 +3,17 @@ import CommentForm from '../../components/blog/commentForm'
 
 class Comments extends React.Component {
 	constructor(props) {
-		super(props)
+		let comments = [],
+			replies = {};
+
+		super()
 
 		this.replyText = "Reply";
+
+		// Separate parent and replied to comments into separate objects
+		props.post.postComments.forEach(comment => {
+			comment.replyToId === null ? comments.push(comment) : replies[comment.replyToId] = comment;
+		});
 
 		this.state = {
 			post				: props.post,
@@ -21,7 +29,9 @@ class Comments extends React.Component {
 									}
 
 									return stateObject;
-								})(this.replyText)
+								})(this.replyText),
+			displayComments		:	comments,
+			displayReplies		:	replies
 		};
 
 		this.handleReplyLinkCicked = this.handleReplyLinkCicked.bind(this);
@@ -55,38 +65,38 @@ class Comments extends React.Component {
 	}
 
 	displayComments() {
-		let comments = [],
-			replies = {};
-
-		// Separate parent and replied to comments into separate objects
-		this.state.post.postComments.forEach(comment => {
-			comment.replyToId === null ? comments.push(comment) : replies[comment.replyToId] = comment;
-		});
-
 		return(
-			comments.map(comment => (
+			this.state.displayComments.map(comment => (
 				<div	key			= {comment.id}
 						className	= "comment-container">
+
+					{/* Display this comment */}
 					<span className="comment-name">{comment.firstName} {comment.lastName}</span>
 					&nbsp;--&nbsp;
 					<span className="comment-datetime">{comment.postDate} {comment.postTime}</span>
 					<div className="comment-content">
 						{ReactHtmlParser(comment.content)}
 					</div>
+
+					{/* // Display replies to this comment */}
 					<div className="comment-replies">
-						{comment.id in replies &&
+						{comment.id in this.state.displayReplies &&
 							<div className="comment-reply">
 								<div className="comment-reply-content">
-									{ReactHtmlParser(replies[comment.id].content)}
+									{ReactHtmlParser(this.state.displayReplies[comment.id].content)}
 									<div className="comment-reply-info">
-										{replies[comment.id].firstName} {replies[comment.id].lastName} -- {replies[comment.id].postDate} {replies[comment.id].postTIme}
+										{this.state.displayReplies[comment.id].firstName}
+										{this.state.displayReplies[comment.id].lastName}
+										&nbsp;--&nbsp;
+										{this.state.displayReplies[comment.id].postDate}
+										{this.state.displayReplies[comment.id].postTIme}
 									</div>
 								</div>
 							</div>
 						}
 					</div>
 
-					<div className="BlogCommentUserCommentReply">
+					<div>
 						<span	className	= "comment-reply-cancel-text"
 								name		= "commentId"
 								data-id		= {comment.id}

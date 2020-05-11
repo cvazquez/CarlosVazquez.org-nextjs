@@ -1,10 +1,10 @@
 class CommentForm extends React.Component {
 
-	constructor(props) {
-		super(props);
+	constructor({commentId, blogPostId}) {
+		super();
 
 		// Boolean indicating if this form is to reply to a comment or the post itself
-		const replyToComment = props.commentId !== null && !isNaN(props.commentId);
+		const replyToComment = commentId !== null && !isNaN(commentId);
 
 		this.state = {
 			firstName		: '',
@@ -12,8 +12,8 @@ class CommentForm extends React.Component {
 			email			: '',
 			comment			: '',
 			emailReply		: '',
-			id				: props.blogPostId,
-			commentId		: props.commentId,
+			id				: blogPostId,
+			commentId		: commentId,
 			commentLegend	: replyToComment ? "Reply To Comment" : "New Comment",
 			replyToComment	: replyToComment,
 			commentPosted	: false
