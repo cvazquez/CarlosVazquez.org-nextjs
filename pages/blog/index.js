@@ -5,7 +5,7 @@ import LatestPosts from '../../components/blog/latestPosts'
 import LatestComments from '../../components/blog/latestComments'
 import Layout from "../../components/blog/layouts/Layout";
 
-function Index({homeData}) {
+export default function Index({homeData}) {
 	return (
 		<Layout>
 			<Container>
@@ -26,9 +26,9 @@ function Index({homeData}) {
 						</main>
 					</Col>
 					<Col xs="12" md="4" className="aside">
-						{TopCategories({homeData})}
-						{LatestPostsAside({homeData})}
-						{LatestComments({homeData})}
+						{TopCategories(homeData.topCategories)}
+						{LatestPostsAside(homeData.latestPosts)}
+						<LatestComments latestComments = {homeData.latestComments} />
 					</Col>
 				</Row>
 			</Container>
@@ -36,13 +36,13 @@ function Index({homeData}) {
 	)
 }
 
-function LatestPostsAside({homeData}) {
+function LatestPostsAside(latestPosts) {
 	return (
 		<aside>
 			<header>
 				<h3>Latest Posts</h3>
 			</header>
-			{LatestPosts({homeData})}
+			<LatestPosts latestPosts = {latestPosts} />
 		</aside>
 	)
 }
@@ -57,5 +57,3 @@ export async function getStaticProps() {
 		}
 	}
 }
-
-export default Index;

@@ -8,9 +8,8 @@ import LatestComments from '../../../components/blog/latestComments'
 import Layout from "../../../components/blog/layouts/Layout";
 import fetch from 'node-fetch'
 
-function Categories({ category }) {
-	const	router = useRouter(),
-			homeData = category;
+function Categories({ categoryData }) {
+	const	router = useRouter();
 
 	if(router.isFallback) {
 		return <div>Loading...</div>
@@ -19,16 +18,16 @@ function Categories({ category }) {
 	return (
 		<Layout>
 			<Head>
-				<title key="title">{category.category[0].categoryName} - {process.env.global.title}</title>
+				<title key="title">{categoryData.category[0].categoryName} - {process.env.global.title}</title>
 			</Head>
 			<Container>
 				<Row>
 					<Col xs="12" md="8">
-						<h1>{category.category[0].categoryName} Posts</h1>
+						<h1>{categoryData.category[0].categoryName} Posts</h1>
 
 						<section className="category-posts">
 						{
-							category.categoryPosts.map(post => (
+							categoryData.categoryPosts.map(post => (
 								<div key={post.titleURL} className="category-post">
 									<Link href="/blog/[...slug]" as={`/blog/${post.titleURL}`}>
 										<a>{post.title}</a>
@@ -43,9 +42,9 @@ function Categories({ category }) {
 						</section>
 					</Col>
 					<Col xs="12" md="4" className="aside">
-						{TopCategories({homeData})}
-						{LatestPostsAside({homeData})}
-						{LatestComments({homeData})}
+						{TopCategories(categoryData.topCategories)}
+						{LatestPostsAside(categoryData.latestPosts)}
+						<LatestComments latestComments = {categoryData.latestComments} />
 					</Col>
 				</Row>
 			</Container>
@@ -53,13 +52,13 @@ function Categories({ category }) {
 	);
 }
 
-function LatestPostsAside({homeData}) {
+function LatestPostsAside(latestPosts) {
 	return (
 		<aside>
 			<header>
 				<h3>Latest Posts</h3>
 			</header>
-			{LatestPosts({homeData})}
+			<LatestPosts latestPosts = {latestPosts} />
 		</aside>
 	)
 }
@@ -73,10 +72,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const	res			= await fetch(`${process.env.global.apiURL}/blog/api/getCategoryPageByName/${params.slug}`),
-			category	= await res.json();
+	const	res				= await fetch(`${process.env.global.apiURL}/blog/api/getCategoryPageByName/${params.slug}`),
+			categoryData	= await res.json();
 
-  return { props: { category } }
+  return { props: { categoryData } }
 }
 
 export default Categories

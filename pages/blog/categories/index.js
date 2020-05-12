@@ -8,7 +8,6 @@ import LatestComments from '../../../components/blog/latestComments'
 import Layout from "../../../components/blog/layouts/Layout";
 
 function Categories({categoryData}) {
-	const homeData = categoryData;
 	return(
 		<Layout>
 			<Head>
@@ -32,9 +31,9 @@ function Categories({categoryData}) {
 						</section>
 					</Col>
 					<Col>
-						{TopCategories({homeData})}
-						{LatestPostsAside({homeData})}
-						{LatestComments({homeData})}
+						{TopCategories(categoryData.topCategories)}
+						{LatestPostsAside(categoryData.latestPosts)}
+						<LatestComments latestComments = {categoryData.latestComments} />
 					</Col>
 				</Row>
 			</Container>
@@ -42,13 +41,13 @@ function Categories({categoryData}) {
 	)
 }
 
-function LatestPostsAside({homeData}) {
+function LatestPostsAside(latestPosts) {
 	return (
 		<aside>
 			<header>
 				<h3>Latest Posts</h3>
 			</header>
-			{LatestPosts({homeData})}
+			<LatestPosts latestPosts = {latestPosts} />
 		</aside>
 	)
 }

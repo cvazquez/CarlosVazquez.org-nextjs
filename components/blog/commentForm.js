@@ -59,7 +59,7 @@ class CommentForm extends React.Component {
 			return (
 				<div className="comment-form-container">
 					<div>
-						<form method="post"onSubmit={this.handleSubmit}>
+						<form method="post" onSubmit={this.handleSubmit}>
 							<fieldset>
 								<legend>{this.state.commentLegend}</legend>
 

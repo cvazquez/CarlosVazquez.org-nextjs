@@ -9,61 +9,78 @@ import LatestPosts from "../../components/blog/latestPosts"
 import LatestComments from "../../components/blog/latestComments"
 import Comments from "../../components/blog/comments"
 import SeriesPosts from "../../components/blog/seriesPosts"
+import Link from 'next/link'
+import React, {Component} from 'react';
 
-function PostPage({ post }) {
-	let homeData = post;
+export class PostPage extends Component {
+	constructor(props) {
+		super(props);
 
-	return (
-		<Layout>
-			<main>
-				<Head>
-					<title key="title">{post.blogPost.title} - {process.env.global.title}</title>
-				</Head>
+		this.state = {
+						post			: props.post,
+						title 			: props.post.blogPost.title,
+						content			: props.post.blogPost.content,
+						id				: props.post.blogPost.id,
+						topCategories	: props.post.topCategories,
+						latestPosts		: props.post.latestPosts,
+						latestComments	: props.post.latestComments,
+						seriesPosts		: props.post.seriesPosts
+					 };
+	}
 
-				<Container>
-					<Row>
-						<Col xs="12" md="8">
-							<article>
-								<header>
-									<h1>{post.blogPost.title}</h1>
-								</header>
+	render() {
+		return (
+			<Layout>
+				<main>
+					<Head>
+						<title key="title">{this.state.title} - {process.env.global.title}</title>
+					</Head>
 
-								<section className="post">
-									{ReactHtmlParser(post.blogPost.content)}
-								</section>
+					<Container>
+						<Row>
+							<Col xs="12" md="8">
+								<article>
+									<header>
+										<h1>{this.props.post.blogPost.title}</h1>
+									</header>
 
-								{Object.keys(post.seriesPosts).length ?
-									<section className="series-posts">
-										<SeriesPosts	series			= {post.seriesPosts}
-														originalPostId	= {post.blogPost.id}
-										/>
+									<section className="post">
+										{ReactHtmlParser(this.props.post.blogPost.content)}
 									</section>
-									: null
-								}
 
-								<Comments post	= {post} />
-							</article>
-						</Col>
-						<Col xs="12" md="4">
-							{TopCategories({homeData})}
-							{LatestPostsAside({homeData})}
-							{LatestComments({homeData})}
-						</Col>
-					</Row>
-				</Container>
-			</main>
+									{Object.keys(this.props.post.seriesPosts).length ?
+										<section className="series-posts">
+											<SeriesPosts	series			= {this.props.post.seriesPosts}
+															originalPostId	= {this.props.post.blogPost.id}
+											/>
+										</section>
+										: null
+									}
 
-		</Layout>
-	)
+									<Comments post	= {this.props.post} />
+								</article>
+							</Col>
+							<Col xs="12" md="4">
+								{TopCategories(this.props.post.topCategories)}
+								{LatestPostsAside(this.state.latestPosts)}
+								<LatestComments latestComments = {this.state.post.latestComments} />
+							</Col>
+						</Row>
+					</Container>
+				</main>
+			</Layout>
+		)
+	}
+
 }
 
-function LatestPostsAside({homeData}) {
+function LatestPostsAside(latestPosts) {
 	return (
 		<aside>
 			<header>
 				<h3>Latest Posts</h3>
 			</header>
-			{LatestPosts({homeData})}
+			<LatestPosts latestPosts = {latestPosts} />
 		</aside>
 	)
 }
@@ -80,7 +97,7 @@ export async function getStaticProps({ params }) {
 	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getPostPageByTitleURL/${params.slug}`),
 			post = await res.json();
 
-  return { props: { post } }
+  return { props: { post, }, }
 }
 
 export default PostPage

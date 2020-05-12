@@ -1,13 +1,21 @@
 import Link from 'next/link'
+import {Component} from 'react'
 
-function LatestPosts({homeData}) {
-	return (
-			<div className="latest-posts">
-				<ul>
-					{homeData.latestPosts.map(latestPost => (
-						<div key={latestPost.id}>
-							<li>
-								<Link href="/blog/[...slug]" as={`/blog/${latestPost.titleURL}`} passHref>
+
+export default class LatestPosts extends Component {
+	constructor(props) {
+		super();
+
+		this.latestPosts = props.latestPosts;
+	}
+
+	render() {
+		return (
+				<div className="latest-posts">
+					<ul>
+						{this.latestPosts.map(latestPost => (
+							<li key={latestPost.id}>
+								<Link href="/blog/[...slug]" as={`/blog/${latestPost.titleURL}`}>
 									<a>{latestPost.title}</a>
 								</Link>
 
@@ -16,11 +24,9 @@ function LatestPosts({homeData}) {
 									{latestPost.commentCount > 0 && ` | ${latestPost.commentCount} Comments`}
 								</div>
 							</li>
-						</div>
-					))}
-				</ul>
-			</div>
-	)
+						))}
+					</ul>
+				</div>
+		)
+	}
 }
-
-export default LatestPosts
