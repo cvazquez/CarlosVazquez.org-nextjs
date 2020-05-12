@@ -1,4 +1,3 @@
-import ReactHtmlParser from 'react-html-parser';
 import CommentForm from '../../components/blog/commentForm'
 import React, {Component} from 'react';
 
@@ -6,47 +5,47 @@ export default class Comments extends Component {
 	constructor(props) {
 		super(props)
 
-		let comments = [],
-			replies = {};
-
 		this.replyText = "Reply";
 
-		// Separate parent and replied to comments into separate objects
-		props.post.postComments.forEach(comment => {
-			comment.replyToId === null ? comments.push(comment) : replies[comment.replyToId] = comment;
-		});
+		this.state = this.getUupdatedState(props);
+		this.propState = this.state;
 
-		this.state = {
-			post				: props.post,
-			comments			: (function(replyText) {
+		this.handleReplyLinkCicked = this.handleReplyLinkCicked.bind(this);
+	}
+
+	getUupdatedState(props) {
+		return {
+			comments			: (() => {
 									// Comment reply objects are dynamically created for each comment
 									var stateObject = {};
 
 									for(var commentId in props.post.postComments) {
 										stateObject[props.post.postComments[commentId].id] = {
 											replyLinkClicked	: false,
-											replyText			: replyText
+											replyText			: this.replyText
 										}
 									}
 
 									return stateObject;
-								})(this.replyText),
-			displayComments		:	comments,
-			displayReplies		:	replies
+								})()
 		};
+	}
 
-		this.handleReplyLinkCicked = this.handleReplyLinkCicked.bind(this);
+	componentDidUpdate(prevProps) {
+		if(this.props.post.blogPost.id !== prevProps.post.blogPost.id) {
+			// Page Post State has chamged, Load new Comments state from updated props
+			this.propState = this.getUupdatedState(this.props);
+		}
 	}
 
 	handleReplyLinkCicked(event) {
 		const 	commentId		= event.currentTarget.dataset.id,
-				commentState	= this.state.comments,
+				commentState	= this.propState.comments,
 				replyText		= commentState[commentId].replyText,
-				//isReply			= replyText === this.replyText
-				test = 1;
+				isReply			= replyText === this.replyText;
 
 		// Update comment id with calculated new state for this comment clicked
-		/* commentState[commentId] = {
+		commentState[commentId] = {
 				replyLinkClicked	: isReply,
 				replyText			: isReply ? "Cancel" : this.replyText
 		};
@@ -54,7 +53,7 @@ export default class Comments extends Component {
 		// Set state for all existing and the updated comment
 		this.setState({
 			comments	: commentState
-		}) */
+		})
 	}
 
 	displayCommentForm(blogPostId, commentId) {
@@ -68,36 +67,14 @@ export default class Comments extends Component {
 
 	render() {
 		const	{ postComments } 	= this.props.post,
+				{ id }				= this.props.post.blogPost,
 				displayReplies		= {},
-				displayComments		= [],
-				{ id }				= this.props.post.blogPost;
-
+				displayComments		= [];
 
 		// Separate comments and their replies
 		postComments.forEach(comment => {
 			comment.replyToId === null ? displayComments.push(comment) : displayReplies[comment.replyToId] = comment;
 		});
-
-		if(!this.state) {
-			this.state = {
-				post				: this.props.post,
-				comments			: (function(replyText, postComments) {
-										// Comment reply objects are dynamically created for each comment
-										var stateObject = {};
-
-										for(var commentId in postComments) {
-											stateObject[postComments[commentId].id] = {
-												replyLinkClicked	: false,
-												replyText			: replyText
-											}
-										}
-
-										return stateObject;
-									})(this.replyText, postComments),
-				displayComments		:	comments,
-				displayReplies		:	replies
-			}
-		}
 
 		return (
 			<section className="comments">
@@ -109,12 +86,12 @@ export default class Comments extends Component {
 					<div	key			= {comment.id}
 							className	= "comment-container">
 
-						{/* Display this comment */}
+						{/* Display this post's comment */}
 						<span className="comment-name">{comment.firstName} {comment.lastName}</span>
 						&nbsp;--&nbsp;
 						<span className="comment-datetime">{comment.postDate} {comment.postTime}</span>
 						<div className="comment-content">
-							{ReactHtmlParser(comment.content)}
+							<div dangerouslySetInnerHTML={{ __html: comment.content }} />
 						</div>
 
 						{/* // Display replies to this comment */}
@@ -122,7 +99,7 @@ export default class Comments extends Component {
 							{comment.id in displayReplies &&
 								<div className="comment-reply">
 									<div className="comment-reply-content">
-										{ReactHtmlParser(displayReplies[comment.id].content)}
+										<div dangerouslySetInnerHTML={{ __html: displayReplies[comment.id].content }} />
 										<div className="comment-reply-info">
 											{displayReplies[comment.id].firstName}
 											{displayReplies[comment.id].lastName}
@@ -140,17 +117,17 @@ export default class Comments extends Component {
 									name		= "commentId"
 									data-id		= {comment.id}
 									onClick		= {this.handleReplyLinkCicked}>
-								{typeof this.state !== 'undefined' && typeof this.state.comments !== 'undefined' && typeof this.state.comments[comment.id] !== 'undefined' ? this.state.comments[comment.id].replyText : this.replyText}
+								{this.state.comments[comment.id] ? this.state.comments[comment.id].replyText : this.replyText}
 							</span>
 
-							{/* Hidden contact form for any replies */}
-							{typeof this.state !== 'undefined' && typeof this.state.comments !== 'undefined' && typeof this.state.comments[comment.id] !== 'undefined' && this.state.comments[comment.id].replyLinkClicked && this.displayCommentForm(id, comment.id)}
+							{/* Hidden contact form for any replies until handleReplyLinkCicked is triggered */}
+							{this.state.comments[comment.id] && this.state.comments[comment.id].replyLinkClicked && this.displayCommentForm(id, comment.id)}
 						</div>
 
 						<div className="comment-separator"></div>
 					</div>
 				))}
-				{this.displayCommentForm(this.state.post.blogPost.id, null)}
+				{this.displayCommentForm(id, null)}
 			</section>
 		)
 	}

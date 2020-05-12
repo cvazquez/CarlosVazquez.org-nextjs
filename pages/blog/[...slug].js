@@ -3,13 +3,11 @@ import fetch from 'node-fetch'
 import Layout from "../../components/blog/layouts/Layout";
 import Head from 'next/head'
 import { Container, Row, Col } from 'reactstrap';
-import ReactHtmlParser from 'react-html-parser';
 import TopCategories from "../../components/blog/topCategories"
 import LatestPosts from "../../components/blog/latestPosts"
 import LatestComments from "../../components/blog/latestComments"
 import Comments from "../../components/blog/comments"
 import SeriesPosts from "../../components/blog/seriesPosts"
-import Link from 'next/link'
 import React, {Component} from 'react';
 
 export class PostPage extends Component {
@@ -45,7 +43,7 @@ export class PostPage extends Component {
 									</header>
 
 									<section className="post">
-										{ReactHtmlParser(this.props.post.blogPost.content)}
+										<div dangerouslySetInnerHTML={{ __html: this.props.post.blogPost.content.replace("class", "className") }} />
 									</section>
 
 									{Object.keys(this.props.post.seriesPosts).length ?
