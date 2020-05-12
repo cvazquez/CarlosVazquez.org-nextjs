@@ -31,7 +31,7 @@ export class PostPage extends Component {
 			<Layout>
 				<main>
 					<Head>
-						<title key="title">{this.state.title} - {process.env.global.title}</title>
+						<title key="title">{this.props.post.blogPost.title} - {process.env.global.title}</title>
 					</Head>
 
 					<Container>
