@@ -1,9 +1,8 @@
 import fetch from 'node-fetch'
 import { Container, Row, Col } from 'reactstrap';
-import TopCategories from '../../components/blog/topCategories'
 import LatestPosts from '../../components/blog/latestPosts'
-import LatestComments from '../../components/blog/latestComments'
 import Layout from "../../components/blog/layouts/Layout";
+import Aside from "../../components/blog/layouts/AsideRight"
 
 export default function Index({homeData}) {
 	return (
@@ -26,9 +25,9 @@ export default function Index({homeData}) {
 						</main>
 					</Col>
 					<Col xs="12" md="4" className="aside">
-						{TopCategories(homeData.topCategories)}
-						{LatestPostsAside(homeData.latestPosts)}
-						<LatestComments latestComments = {homeData.latestComments} />
+						<Aside	topCategories	= {homeData.topCategories}
+								latestPosts		= {homeData.latestPosts}
+								latestComments	= {homeData.latestComments} />
 					</Col>
 				</Row>
 			</Container>

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import {Component} from 'react'
 
-
 export default class LatestPosts extends Component {
 	constructor(props) {
 		super();

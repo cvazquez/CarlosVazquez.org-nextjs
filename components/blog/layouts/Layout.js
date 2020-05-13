@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Header from "./Header";
 import NavBar from "./NavBar";
 
-const Layout = props => (
+export default props => (
   <div className="Layout">
 	<Head>
 		<title>{process.env.global.title}</title>
@@ -17,5 +17,3 @@ const Layout = props => (
     <NavBar />
   </div>
 );
-
-export default Layout;

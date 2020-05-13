@@ -1,4 +1,4 @@
-class CommentForm extends React.Component {
+export default class CommentForm extends React.Component {
 
 	constructor({commentId, blogPostId}) {
 		super();
@@ -23,6 +23,15 @@ class CommentForm extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentDidUpdate(prevProps) {
+		if(this.props.blogPostId !== prevProps.blogPostId) {
+			// Page Post State has chamged, Load new Comments state from updated props
+			this.setState({
+				commentPosted	: false
+			});
+		}
+	}
+
 	handleSubmit(event) {
 		event.preventDefault();
 
@@ -34,13 +43,10 @@ class CommentForm extends React.Component {
 						})
 						.then(res => res.json())
 						.then(json => {
-							if(json.status && json.status.affectedRows) {
-								if(json.status.affectedRows > 0) {
-									this.setState({
-										commentPosted	: true
-									})
-								}
-							}
+							(json.status && json.status.affectedRows && json.status.affectedRows > 0) &&
+								this.setState({
+									commentPosted	: true
+								});
 						});
 	}
 
@@ -136,5 +142,3 @@ class CommentForm extends React.Component {
 		}
 	}
 }
-
-export default CommentForm

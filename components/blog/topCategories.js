@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-function TopCategories(topCategories) {
+export default function TopCategories(topCategories) {
 	return (
 		<aside>
 			<header>
@@ -26,5 +26,3 @@ function TopCategories(topCategories) {
 		</aside>
 	)
 }
-
-export default TopCategories

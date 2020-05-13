@@ -1,9 +1,7 @@
 // components/NavBar.js
 
-const NavBar = () => (
+export default () => (
 	<div className="nav-bar">
 
 	</div>
 );
-
-export default NavBar;

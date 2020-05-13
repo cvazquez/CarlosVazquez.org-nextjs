@@ -3,29 +3,12 @@ import fetch from 'node-fetch'
 import Layout from "../../components/blog/layouts/Layout";
 import Head from 'next/head'
 import { Container, Row, Col } from 'reactstrap';
-import TopCategories from "../../components/blog/topCategories"
-import LatestPosts from "../../components/blog/latestPosts"
-import LatestComments from "../../components/blog/latestComments"
 import Comments from "../../components/blog/comments"
 import SeriesPosts from "../../components/blog/seriesPosts"
 import React, {Component} from 'react';
+import Aside from "../../components/blog/layouts/AsideRight"
 
-export class PostPage extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-						post			: props.post,
-						title 			: props.post.blogPost.title,
-						content			: props.post.blogPost.content,
-						id				: props.post.blogPost.id,
-						topCategories	: props.post.topCategories,
-						latestPosts		: props.post.latestPosts,
-						latestComments	: props.post.latestComments,
-						seriesPosts		: props.post.seriesPosts
-					 };
-	}
-
+export default class PostPage extends Component {
 	render() {
 		return (
 			<Layout>
@@ -59,9 +42,9 @@ export class PostPage extends Component {
 								</article>
 							</Col>
 							<Col xs="12" md="4">
-								{TopCategories(this.props.post.topCategories)}
-								{LatestPostsAside(this.state.latestPosts)}
-								<LatestComments latestComments = {this.state.post.latestComments} />
+								<Aside	topCategories	= {this.props.post.topCategories}
+										latestPosts		= {this.props.post.latestPosts}
+										latestComments	= {this.props.post.latestComments} />
 							</Col>
 						</Row>
 					</Container>
@@ -70,17 +53,6 @@ export class PostPage extends Component {
 		)
 	}
 
-}
-
-function LatestPostsAside(latestPosts) {
-	return (
-		<aside>
-			<header>
-				<h3>Latest Posts</h3>
-			</header>
-			<LatestPosts latestPosts = {latestPosts} />
-		</aside>
-	)
 }
 
 export async function getStaticPaths() {
@@ -97,5 +69,3 @@ export async function getStaticProps({ params }) {
 
   return { props: { post, }, }
 }
-
-export default PostPage

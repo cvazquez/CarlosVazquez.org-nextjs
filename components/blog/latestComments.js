@@ -1,6 +1,5 @@
 import Link from 'next/link'
 
-
 export default class LatestComments extends React.Component {
 	constructor(props) {
 		super();

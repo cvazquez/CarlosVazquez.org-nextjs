@@ -1,16 +1,9 @@
 import Link from "next/link"
 
-class SeriesPosts extends React.Component {
-	constructor ({series, originalPostId}) {
-		super();
-
-		this.series = series;
-		this.originalPostId = originalPostId;
-	}
-
+export default class SeriesPosts extends React.Component {
 	display(series, originalPostId) {
-		// Filter out original post from series
 		let seriesFiltered = series.filter(post => {
+			// Filter out original post from series
 			return originalPostId !== post.entryId && post
 		});
 
@@ -34,10 +27,8 @@ class SeriesPosts extends React.Component {
 	render() {
 		return (
 			<div>
-				{this.display(this.series, this.originalPostId)}
+				{this.display(this.props.series, this.props.originalPostId)}
 			</div>
 		)
 	}
 }
-
-export default SeriesPosts

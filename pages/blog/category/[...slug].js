@@ -2,13 +2,11 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Container, Row, Col } from 'reactstrap';
-import TopCategories from '../../../components/blog/topCategories'
-import LatestPosts from '../../../components/blog/latestPosts'
-import LatestComments from '../../../components/blog/latestComments'
 import Layout from "../../../components/blog/layouts/Layout";
 import fetch from 'node-fetch'
+import Aside from "../../../components/blog/layouts/AsideRight"
 
-function Categories({ categoryData }) {
+export default function Categories({ categoryData }) {
 	const	router = useRouter();
 
 	if(router.isFallback) {
@@ -42,25 +40,14 @@ function Categories({ categoryData }) {
 						</section>
 					</Col>
 					<Col xs="12" md="4" className="aside">
-						{TopCategories(categoryData.topCategories)}
-						{LatestPostsAside(categoryData.latestPosts)}
-						<LatestComments latestComments = {categoryData.latestComments} />
+						<Aside	topCategories	= {categoryData.topCategories}
+								latestPosts		= {categoryData.latestPosts}
+								latestComments	= {categoryData.latestComments} />
 					</Col>
 				</Row>
 			</Container>
 		</Layout>
 	);
-}
-
-function LatestPostsAside(latestPosts) {
-	return (
-		<aside>
-			<header>
-				<h3>Latest Posts</h3>
-			</header>
-			<LatestPosts latestPosts = {latestPosts} />
-		</aside>
-	)
 }
 
 export async function getStaticPaths() {
@@ -77,5 +64,3 @@ export async function getStaticProps({ params }) {
 
   return { props: { categoryData } }
 }
-
-export default Categories
