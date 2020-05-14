@@ -7,12 +7,14 @@ $color-midgrey: #686a6f;
 $color-orange: #FFA500;
 $color-grape: #43414e;
 $color-san-marino: #536DA7;
+$color-white-smoke: #F1F1F1;
 
 
 $primary-text-color: $color-knight-rider;
 $separator-color: $color-silver;
 $border-light-color: $separator-color;
 $background-color: $color-white;
+$background-color-hover: $color-white-smoke;
 $separator-border-color: $separator-color;
 $a-hover-color: $color-black;
 $a-hover-underline: $color-grape;
@@ -95,6 +97,48 @@ body {
 				}
 			}
 		}
+
+		#search-terms {
+			border-radius: 10px;
+    		padding: 5px;
+		}
+
+		.search-results-container {
+			display: inline-block;
+			width: 33%;
+			overflow: scroll;
+			height: 50%;
+
+			.close-search-overlay {
+				text-align: left;
+				margin-left: 20px;
+				background-color: $color-white;
+				z-index: 11;
+				position: relative;
+
+				.x {
+					font-weight: 600;
+					font-size: 2rem;
+				}
+			}
+
+			ul.search-results-overlay {
+				text-align: left;
+				background-color: $color-white;
+				position: relative;
+				z-index: 10;
+				list-style-type: none;
+
+				li {
+					border-bottom: $separator-border-width $separator-border-style $separator-border-color;
+				}
+
+				li:hover {
+					background-color: $background-color-hover;
+				}
+			}
+		}
+
 	}
 
 	.nav-bar {
