@@ -17,6 +17,7 @@ export default function Categories({ categoryData }) {
 		<Layout>
 			<Head>
 				<title key="title">{categoryData.category[0].categoryName} - {process.env.global.title}</title>
+				<script type="text/javascript" src="/javascripts/tracking.js" defer />
 			</Head>
 			<Container>
 				<Row>

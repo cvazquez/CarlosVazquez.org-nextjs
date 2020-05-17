@@ -1,12 +1,15 @@
 import fetch from 'node-fetch'
 import { Container, Row, Col } from 'reactstrap';
-import LatestPosts from '../../components/blog/latestPosts'
 import Layout from "../../components/blog/layouts/Layout";
 import Aside from "../../components/blog/layouts/AsideRight"
+import Head from 'next/head'
 
 export default function Index({homeData}) {
 	return (
 		<Layout>
+			<Head>
+				{/* <script type="text/javascript" src="/javascripts/tracking.js" defer /> */}
+			</Head>
 			<Container>
 				<Row>
 					<Col xs="12" md="8">
@@ -32,17 +35,6 @@ export default function Index({homeData}) {
 				</Row>
 			</Container>
 		</Layout>
-	)
-}
-
-function LatestPostsAside(latestPosts) {
-	return (
-		<aside>
-			<header>
-				<h3>Latest Posts</h3>
-			</header>
-			<LatestPosts latestPosts = {latestPosts} />
-		</aside>
 	)
 }
 

@@ -15,6 +15,7 @@ export default class PostPage extends Component {
 				<main>
 					<Head>
 						<title key="title">{this.props.post.blogPost.title} - {process.env.global.title}</title>
+						<script type="text/javascript" src="/javascripts/tracking.js" defer />
 					</Head>
 
 					<Container>

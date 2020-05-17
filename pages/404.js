@@ -7,6 +7,7 @@ export default function Custom404() {
 		<Layout>
 			<Head>
 				<title key="title">Page Not Found - {process.env.global.title}</title>
+				<script type="text/javascript" src="/javascripts/tracking.js" defer />
 			</Head>
 
 			<h1>Page Not Found</h1>
