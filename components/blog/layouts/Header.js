@@ -21,7 +21,7 @@ function useOutsideAlerter(ref, setSearchResults) {
 function buildResultsOverlay(results, setSearchResults) {
 	return(
 		<div className="search-results-container">
-			<div className="close-search-overlay" onClick={() => setSearchResults("")}><span className="x">x</span> Close</div>
+			<div className="close-search-overlay" onClick={() => setSearchResults("")}><span className="x">x</span></div>
 			<ul className="search-results-overlay">
 				{results.map(result => (
 					<li key={result.id}>

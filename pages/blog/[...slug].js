@@ -7,6 +7,7 @@ import Comments from "../../components/blog/comments"
 import SeriesPosts from "../../components/blog/seriesPosts"
 import React, {Component} from 'react';
 import Aside from "../../components/blog/layouts/AsideRight"
+import SlideShow from "../../components/blog/slideShow"
 
 export default class PostPage extends Component {
 	render() {
@@ -29,6 +30,14 @@ export default class PostPage extends Component {
 									<section className="post">
 										<div dangerouslySetInnerHTML={{ __html: this.props.post.blogPost.content.replace("class", "className") }} />
 									</section>
+
+									{Object.keys(this.props.post.flikrImages).length ?
+										<section className="slide-show">
+											<SlideShow flikrImages = {this.props.post.flikrImages} />
+										</section>
+										: null
+									}
+
 
 									{Object.keys(this.props.post.seriesPosts).length ?
 										<section className="series-posts">

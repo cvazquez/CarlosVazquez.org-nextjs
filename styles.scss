@@ -106,28 +106,35 @@ body {
 		.search-results-container {
 			display: inline-block;
 			width: 33%;
-			overflow: scroll;
 			height: 50%;
+			background-color: $color-white;
 
 			.close-search-overlay {
 				text-align: left;
-				margin-left: 20px;
+				margin-left: 10px;
 				background-color: $color-white;
 				z-index: 11;
 				position: relative;
 
 				.x {
+					background-color: $color-white;
 					font-weight: 600;
 					font-size: 2rem;
+					cursor: pointer;
 				}
 			}
 
 			ul.search-results-overlay {
+				border: $separator-border-width $separator-border-style $separator-border-color;
+				border-radius: 10px;
 				text-align: left;
 				background-color: $color-white;
 				position: relative;
 				z-index: 10;
 				list-style-type: none;
+				overflow-y: scroll;
+				overflow-x: hidden;
+				height: 50%;
 
 				li {
 					border-bottom: $separator-border-width $separator-border-style $separator-border-color;
@@ -155,6 +162,37 @@ body {
 			a {
 				color: $a-link-color;
 				font-weight: $a-link-weight;
+			}
+		}
+
+		.slide-show {
+			margin: 40px 0px;
+			.slide-show-image-col {
+				text-align: center;
+			}
+
+			.caret {
+				margin: auto;
+				font-size: 2rem;
+				cursor: pointer;
+				font-weight: 900;
+			}
+
+			ul.slide-show-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+
+				img {
+					height: 375px;
+					width: 492px;
+					border: 12px $separator-border-style $separator-border-color;
+					border-radius: 12px;
+				}
+
+				.slide-show-image-caption {
+					font-weight: 500;
+				}
 			}
 		}
 
