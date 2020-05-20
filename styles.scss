@@ -193,6 +193,24 @@ body {
 				.slide-show-image-caption {
 					font-weight: 500;
 				}
+
+				ul.image-pagination {
+					margin: 0;
+					padding: 0;
+					list-style-type: none;
+
+					li {
+						display: inline;
+						margin: 0px 5px;
+						cursor: pointer;
+						color: $a-link-color;
+					}
+
+					li:hover {
+						color: $a-hover-color;
+						border-bottom: $separator-border-width $separator-border-style $a-hover-underline;
+					}
+				}
 			}
 		}
 
