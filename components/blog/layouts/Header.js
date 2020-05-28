@@ -3,11 +3,11 @@ import { Container, Row, Col } from 'reactstrap';
 import Link from "next/link";
 import React, {useState, useRef, useEffect} from "react";
 
-function useOutsideAlerter(ref, setSearchResults) {
+function useOutsideAlerter(ref, setSearchResults, setBackgroundOverlay) {
 	useEffect(() => {
 		// Alert if clicked on outside of element
 		function handleClickOutside(event) {
-			(ref.current && !ref.current.contains(event.target)) && setSearchResults("");
+			(ref.current && !ref.current.contains(event.target)) && clearOverlay(setSearchResults, setBackgroundOverlay);
 		}
 
 		// Bind the event listener
@@ -16,34 +16,43 @@ function useOutsideAlerter(ref, setSearchResults) {
 		// Unbind the event listener on clean up
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, [ref]);
-  }
+}
 
-function buildResultsOverlay(results, setSearchResults) {
+function clearOverlay(setSearchResults, setBackgroundOverlay) {
+	setSearchResults("");
+	setBackgroundOverlay("");
+}
+
+function buildResultsOverlay(results, setSearchResults, setBackgroundOverlay) {
 	return(
 		<div className="search-results-container">
-			<div className="close-search-overlay" onClick={() => setSearchResults("")}><span className="x">x</span></div>
+			<div className="close-search-overlay" onClick={() => clearOverlay(setSearchResults, setBackgroundOverlay)}><span className="x">x</span></div>
 			<ul className="search-results-overlay">
-				{results.map(result => (
-					<li key={result.id}>
-						<Link href={`/blog/[...slug]`} as={`/blog/${result.value}`}>
-							<a>{result.label}</a>
-						</Link>
-					</li>
-				))}
+				{
+					results.length ?
+					results.map(result => (
+						<li key={result.id}>
+							<Link href={`/blog/[...slug]`} as={`/blog/${result.value}`}>
+								<a>{result.label}</a>
+							</Link>
+						</li>
+					)) : "No Results Founds"
+				}
 			</ul>
 		</div>
 	)
 }
 
-async function getSearchResults(terms, setSearchResults) {
+async function getSearchResults(terms, setSearchResults, setBackgroundOverlay) {
 	const	res 			= await fetch(`/api/getSearchResults/${terms}`),
 			response		= await res.json(),
-			resultsOverlay	= await buildResultsOverlay(response.results, setSearchResults);
+			resultsOverlay	= await buildResultsOverlay(response.results, setSearchResults, setBackgroundOverlay);
 
-	setSearchResults(resultsOverlay)
+	setSearchResults(resultsOverlay);
+	setBackgroundOverlay("overlay-background");
 }
 
-export default function Header() {
+export default function Header({setBackgroundOverlay}) {
 	const	navLinks = [
 							{
 								id		: 1,
@@ -74,13 +83,13 @@ export default function Header() {
 			[searchResults, setSearchResults] = useState(""),
 			wrapperRef = useRef(null);
 
-	useOutsideAlerter(wrapperRef, setSearchResults);
+	useOutsideAlerter(wrapperRef, setSearchResults, setBackgroundOverlay);
 
 	return (
 		<div ref={wrapperRef}>
 			<Container className="blog-header">
 				<Row>
-					<Col xs="12" md="5" lg="3" className="header-logo"><a href="/blog"><img src="/images/logo.gif" /></a></Col>
+					<Col xs="12" md="5" lg="3" className="header-logo"><a href="/blog"><img src="/images/logo-transparent.gif" /></a></Col>
 					<Col xs="12" md="7" lg="9">
 						<ul className="header-nav">
 							{navLinks.map(	nav => (
@@ -103,9 +112,13 @@ export default function Header() {
 						<form method="get" onSubmit={ (e) => {
 							e.preventDefault();
 
-							getSearchResults(e.target.terms.value, setSearchResults);
+							(e.target.terms.value && e.target.terms.value.length) &&
+								getSearchResults(e.target.terms.value, setSearchResults, setBackgroundOverlay);
 						} }>
-							<input type="text" name="terms" id="search-terms" placeholder="Search" />
+							<input type="text" name="terms" id="search-terms" placeholder="Search" onChange={ (e) => {
+								(e.target.value && e.target.value.length) &&
+									getSearchResults(e.target.value, setSearchResults, setBackgroundOverlay);
+							} } />
 						</form>
 						{searchResults}
 					</Col>
