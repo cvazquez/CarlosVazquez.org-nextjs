@@ -37,7 +37,6 @@ body {
 		position: absolute;
 		top: 0;
 		right: 0;
-		bottom: 0;
 		left: 0;
 		opacity: 0.5;
 		z-index: 100;
@@ -88,6 +87,10 @@ body {
 		.header-logo {
 			float: left;
 			text-align: center;
+
+			a:hover {
+				border-bottom: none;
+			}
 		}
 
 		ul.header-nav {
@@ -111,9 +114,13 @@ body {
 			}
 		}
 
-		#search-terms {
-			border-radius: 10px;
-    		padding: 5px;
+		.search-box-container {
+			text-align: right;
+
+			#search-terms {
+				border-radius: 10px;
+				padding: 5px;
+			}
 		}
 
 		.search-results-container {
@@ -121,10 +128,17 @@ body {
 			top:75%;
 			left:25%;
 			width: 50%;
+			min-height: 480px;
 			background-color: $color-white;
 			border: $separator-border-width $separator-border-style $separator-border-color;
 			border-radius: 10px;
 			z-index: 10000;
+
+			@media (max-width: 768px) {
+				width: 75%;
+				left: 12%;
+				top: 125%;
+			}
 
 			.close-search-overlay {
 				text-align: left;
@@ -315,6 +329,10 @@ body {
 				padding-bottom: 15px;
 				border-bottom: $separator-border-width $separator-border-style $separator-border-color;
 				width: 75%;
+
+				.badge {
+					margin-left: 5px;
+				}
 			}
 		}
 

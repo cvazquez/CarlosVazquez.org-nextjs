@@ -49,8 +49,6 @@ export default class SlideShow extends React.Component {
 	}
 
 	render() {
-
-
 		return (
 			<div>
 				<Container>

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Badge } from 'reactstrap'
 
 export default function TopCategories(topCategories) {
 	return (
@@ -13,7 +14,7 @@ export default function TopCategories(topCategories) {
 							<Link href={`/blog/category/[...slug]`} as={`/blog/category/${category.nameURL}`}>
 								<a>{category.name}</a>
 							</Link>
-							&nbsp;({category.entryCount})
+							<Badge pill>{category.entryCount}</Badge>
 						</div>
 					</li>
 				))}

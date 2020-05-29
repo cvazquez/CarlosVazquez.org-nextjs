@@ -1,3 +1,5 @@
+import { Alert, Button } from "reactstrap";
+
 export default class CommentForm extends React.Component {
 
 	constructor({commentId, blogPostId}) {
@@ -59,7 +61,8 @@ export default class CommentForm extends React.Component {
 	render() {
 		if(this.state.commentPosted) {
 			return (
-				<div className="comment-posted">Thank you! Your {this.state.replyToComment ? "reply" : "comment"} has been saved and I am reviewing them for public display.</div>
+				<div className="comment-posted">
+					<Alert color="success">Thank you! Your {this.state.replyToComment ? "reply" : "comment"} has been saved and I am reviewing them for public display.</Alert></div>
 			)
 		} else {
 			return (
@@ -129,10 +132,7 @@ export default class CommentForm extends React.Component {
 													value	= {this.state.commentId}
 											/>
 									}
-
-									<input	type	= "submit"
-											value	= {this.state.replyToComment ? "Reply" : "Post Comment"}
-									/>
+									<Button color="primary">{this.state.replyToComment ? "Reply" : "Post Comment"}</Button>
 								</div>
 							</fieldset>
 						</form>
