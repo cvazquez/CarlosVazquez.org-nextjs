@@ -1,4 +1,4 @@
-// https://www.color-blindness.com/color-name-hue/
+// Colors - https://www.color-blindness.com/color-name-hue/
 $color-knight-rider: #333;
 $color-silver: silver;
 $color-white: white;
@@ -9,8 +9,10 @@ $color-grape: #43414e;
 $color-san-marino: #536DA7;
 $color-white-smoke: #F1F1F1;
 $color-gray-smoke: #e9e9e9;
+$color-very-light-gray: #cdcdcd;
+$color-nero: #232323;
 
-
+// Colors applied
 $primary-text-color: $color-knight-rider;
 $separator-color: $color-silver;
 $border-light-color: $separator-color;
@@ -22,11 +24,14 @@ $a-hover-underline: $color-grape;
 $a-visited: $color-midgrey;
 $a-link: $color-midgrey;
 $a-link-color: $color-san-marino;
-$a-link-weight: 600;
+$menu-hamburger-color: $color-very-light-gray;
+$menu-close-cross-color: $color-nero;
+$menu-background-color: $color-white-smoke;
 
+// Weights and Measures
+$a-link-weight: 600;
 $separator-border-width: 1px;
 $separator-border-style: solid;
-
 $size-subtext: .75rem;
 
 body {
@@ -42,9 +47,13 @@ body {
 		z-index: 100;
 	}
 
-	padding: 20px 0px 60px;
+
 	margin: 0;
 	color: $primary-text-color;
+
+	@media (min-width: 768px) {
+		padding: 20px 0px 60px;
+	}
 
 	a:visited {
 		color: $a-visited;
@@ -193,6 +202,7 @@ body {
 
 		.slide-show {
 			margin: 40px 0px;
+
 			.slide-show-image-col {
 				text-align: center;
 			}
@@ -338,6 +348,112 @@ body {
 
 		.aside-sub-section {
 			font-size: $size-subtext;
+		}
+	}
+}
+
+
+// Mobile Menu
+@media (min-width: 768px) {
+	#menu-toggle {
+		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+	.header-nav {
+		display: none;
+	}
+
+	// taken from https://codepen.io/erikterwan/pen/EVzeRP
+	#menu-toggle {
+		display: block;
+		position: relative;
+		top: 20px;
+		left: 20px;
+		z-index: 1;
+		-webkit-user-select: none;
+		user-select: none;
+
+		input {
+			display: block;
+			width: 40px;
+			height: 32px;
+			position: absolute;
+			top: -7px;
+			left: -5px;
+			cursor: pointer;
+			opacity: 0;
+			z-index: 2;
+			-webkit-touch-callout: none;
+		}
+
+		// Hamburger Menu
+		span {
+			display: block;
+			width: 33px;
+			height: 4px;
+			margin-bottom: 5px;
+			position: relative;
+			background: $menu-hamburger-color;
+			border-radius: 3px;
+			z-index: 1;
+			transform-origin: 4px 0px;
+			transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+						background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+						opacity 0.55s ease;
+		}
+
+		span:first-child {
+			transform-origin: 0% 0%;
+		}
+
+		span:nth-last-child(2) {
+			transform-origin: 0% 100%;
+		}
+
+		// Transform all the slices of hamburger into a crossmark.
+		input:checked ~ span {
+			opacity		: 1;
+			transform	: rotate(45deg) translate(-2px, -1px);
+			background	: $menu-close-cross-color;
+		}
+
+		// hide the middle one.
+		input:checked ~ span:nth-last-child(3) {
+			opacity: 0;
+			transform: rotate(0deg) scale(0.2, 0.2);
+		}
+
+		// last one should go the other direction
+		input:checked ~ span:nth-last-child(2) {
+			transform: rotate(-45deg) translate(0, -1px);
+		}
+
+		input:checked ~ ul {
+			transform: none;
+		}
+	}
+
+	#menu {
+		position: absolute;
+		width: 300px;
+		margin: -100px 0 0 -50px;
+		padding: 50px;
+		padding-top: 125px;
+
+		background: $menu-background-color;
+		list-style-type: none;
+		-webkit-font-smoothing: antialiased;
+
+		transform-origin: 0% 0%;
+		transform: translate(-100%, 0);
+
+		transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+
+		li {
+			padding: 10px 0;
+			font-size: 22px;
 		}
 	}
 }

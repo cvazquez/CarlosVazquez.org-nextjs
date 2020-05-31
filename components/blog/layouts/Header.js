@@ -2,6 +2,7 @@
 import { Container, Row, Col } from 'reactstrap';
 import Link from "next/link";
 import React, {useState, useRef, useEffect} from "react";
+import navLinks from './navLinks';
 
 function useOutsideAlerter(ref, setSearchResults, setBackgroundOverlay) {
 	useEffect(() => {
@@ -53,34 +54,7 @@ async function getSearchResults(terms, setSearchResults, setBackgroundOverlay) {
 }
 
 export default function Header({setBackgroundOverlay}) {
-	const	navLinks = [
-							{
-								id		: 1,
-								name	: "Travel",
-								slug	: "Travel"
-							},
-							{
-								id		: 2,
-								name	: "Fitness/Health",
-								slug	: "Fitness-And-Health"
-							},
-							{
-								id		: 3,
-								name	: "Random",
-								slug	: "Random-Ramblings"
-							},
-							{
-								id		: 4,
-								name	: "Developer",
-								slug	: "Website-Development"
-							},
-							{
-								id		: 5,
-								name	: "Portfolio",
-								slug	: "Portfolio"
-							}
-						],
-			[searchResults, setSearchResults] = useState(""),
+	const	[searchResults, setSearchResults] = useState(""),
 			wrapperRef = useRef(null);
 
 	useOutsideAlerter(wrapperRef, setSearchResults, setBackgroundOverlay);
@@ -88,9 +62,9 @@ export default function Header({setBackgroundOverlay}) {
 	return (
 		<div ref={wrapperRef}>
 			<Container className="blog-header">
-				<Row>
+				<Row noGutters>
 					<Col xs="12" md="5" lg="3" className="header-logo"><a href="/blog"><img src="/images/logo-transparent.gif" /></a></Col>
-					<Col className="d-none d-sm-block" md="4" lg="7">
+					<Col className="d-none d-md-block" md="4" lg="7">
 						<ul className="header-nav">
 							{navLinks.map(	nav => (
 								<li key={nav.id}>
@@ -111,7 +85,7 @@ export default function Header({setBackgroundOverlay}) {
 					</Col>
 				</Row>
 
-				<Row>
+				<Row noGutters>
 					<Col className='search-box-container'>
 						<form method="get" onSubmit={ (e) => {
 							e.preventDefault();

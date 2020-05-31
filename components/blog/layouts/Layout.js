@@ -15,11 +15,12 @@ export default props => {
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 
-			<Header setBackgroundOverlay={setBackgroundOverlay} />
+			<NavBar />
+			<Header setBackgroundOverlay = {setBackgroundOverlay} />
 				<div className="Content">
 					{props.children}
 				</div>
-			<NavBar />
+
 		</div>
 	)
 }
