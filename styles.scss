@@ -70,6 +70,15 @@ body {
 		border-bottom: $separator-border-width $separator-border-style $a-hover-underline;
 	}
 
+	code {
+		display: block;
+		margin: 20px 0px;
+		border: $separator-border-width $separator-border-style $border-light-color;
+		border-radius: 10px;
+		padding: 15px;
+		background-color: $background-color-hover;
+	}
+
 	h1 {
 		margin-bottom: 1.75rem;
 	}
