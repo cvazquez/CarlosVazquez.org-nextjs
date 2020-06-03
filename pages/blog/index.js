@@ -30,7 +30,8 @@ export default function Index({homeData}) {
 					<Col xs="12" md="4" className="aside">
 						<Aside	topCategories	= {homeData.topCategories}
 								latestPosts		= {homeData.latestPosts}
-								latestComments	= {homeData.latestComments} />
+								latestComments	= {homeData.latestComments}
+								latestSeries	= {homeData.latestSeries} />
 					</Col>
 				</Row>
 			</Container>

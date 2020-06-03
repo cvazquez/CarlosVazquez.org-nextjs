@@ -326,9 +326,9 @@ body {
 			}
 		}
 
-		.category-posts {
-			.category-post {
-				margin-bottom: 40px;
+		.category-posts, .series {
+			.category-post, .series-entry {
+				margin-bottom: 30px;
 
 				.publish-date {
 					font-size: $size-subtext;

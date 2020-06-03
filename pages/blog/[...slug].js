@@ -54,7 +54,8 @@ export default class PostPage extends Component {
 							<Col xs="12" md="4">
 								<Aside	topCategories	= {this.props.post.topCategories}
 										latestPosts		= {this.props.post.latestPosts}
-										latestComments	= {this.props.post.latestComments} />
+										latestComments	= {this.props.post.latestComments}
+										latestSeries	= {this.props.post.latestSeries} />
 							</Col>
 						</Row>
 					</Container>

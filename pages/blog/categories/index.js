@@ -32,7 +32,8 @@ export default function Categories({categoryData}) {
 					<Col>
 						<Aside	topCategories	= {categoryData.topCategories}
 								latestPosts		= {categoryData.latestPosts}
-								latestComments	= {categoryData.latestComments} />
+								latestComments	= {categoryData.latestComments}
+								latestSeries	= {categoryData.latestSeries} />
 					</Col>
 				</Row>
 			</Container>
