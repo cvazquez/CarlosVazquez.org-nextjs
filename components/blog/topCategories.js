@@ -19,7 +19,7 @@ export default function TopCategories(topCategories) {
 					</li>
 				))}
 				<li>
-					<Link href="/blog/categories" as={`/blog/categories`}>
+					<Link href="/blog/categories" as="/blog/categories">
 						<a>All Categories</a>
 					</Link>
 				</li>

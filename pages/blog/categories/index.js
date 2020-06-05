@@ -16,25 +16,28 @@ export default function Categories({categoryData}) {
 				<Row xs="1" lg="2">
 					<Col>
 						<h1>Categories</h1>
-						<section className="categories">
-							{categoryData.categories.map(category => (
-								<div key={category.nameURL} className="category">
-									<Link href="/blog/category/[...slug]" as={`/blog/category/${category.nameURL}`}>
-										<a>{category.name}</a>
-									</Link>
-									<Badge pill>{category.entryCount}</Badge>
-									<div className="list-teaser">
-										{category.teaser}
-									</div>
-								</div>
-							))}
+						<section className="categories category-posts">
+							<ul>
+								{categoryData.categories.map(category => (
+									<li key={category.nameURL} className="category">
+										<Link href="/blog/category/[...slug]" as={`/blog/category/${category.nameURL}`}>
+											<a>{category.name}</a>
+										</Link>
+										<Badge pill>{category.entryCount}</Badge>
+										<div className="list-teaser">
+											{category.teaser}
+										</div>
+									</li>
+								))}
+							</ul>
 						</section>
 					</Col>
 					<Col>
-						<Aside	topCategories	= {categoryData.topCategories}
-								latestPosts		= {categoryData.latestPosts}
-								latestComments	= {categoryData.latestComments}
-								latestSeries	= {categoryData.latestSeries} />
+						<Aside	topCategories		= {categoryData.topCategories}
+								latestPosts			= {categoryData.latestPosts}
+								latestComments		= {categoryData.latestComments}
+								latestSeries		= {categoryData.latestSeries}
+								latestImagePosts	= {categoryData.latestImagePosts}  />
 					</Col>
 				</Row>
 			</Container>

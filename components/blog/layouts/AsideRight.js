@@ -2,6 +2,7 @@ import TopCategories from "../topCategories";
 import LatestPosts from "../latestPosts";
 import LatestComments from "../latestComments";
 import LatestSeries from "../latestSeries";
+import LatestImagePosts from "../latestImagePosts";
 
 export default class AsideRight extends React.Component {
 
@@ -23,6 +24,7 @@ export default class AsideRight extends React.Component {
 				{this.LatestPostsAside(this.props.latestPosts)}
 				<LatestComments latestComments = {this.props.latestComments} />
 				<LatestSeries latestSeries = {this.props.latestSeries} />
+				<LatestImagePosts latestImagePosts = {this.props.latestImagePosts} />
 			</div>
 		)
 	}

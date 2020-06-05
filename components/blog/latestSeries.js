@@ -9,7 +9,7 @@ export default ({latestSeries}) => (
 			<ul>
 				{latestSeries.map(series => (
 					<li key={series.nameURL}>
-						<Link href="/blog/series/[.../slug]" as={`/blog/series/${series.nameURL}`}>
+						<Link href="/blog/series/[...slug]" as={`/blog/series/${series.nameURL}`}>
 							<a>{series.name}</a>
 						</Link>
 						<Badge pill>{series.entryCount}</Badge>

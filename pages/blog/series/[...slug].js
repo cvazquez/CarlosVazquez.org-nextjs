@@ -43,10 +43,11 @@ export default function Series({ seriesEntriesData }) {
 						</section>
 					</Col>
 					<Col xs="12" md="4" className="aside">
-						<Aside	topCategories	= {seriesEntriesData.topCategories}
-								latestPosts		= {seriesEntriesData.latestPosts}
-								latestComments	= {seriesEntriesData.latestComments}
-								latestSeries	= {seriesEntriesData.latestSeries} />
+						<Aside	topCategories		= {seriesEntriesData.topCategories}
+								latestPosts			= {seriesEntriesData.latestPosts}
+								latestComments		= {seriesEntriesData.latestComments}
+								latestSeries		= {seriesEntriesData.latestSeries}
+								latestImagePosts	= {seriesEntriesData.latestImagePosts} />
 					</Col>
 				</Row>
 			</Container>

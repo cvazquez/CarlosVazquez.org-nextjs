@@ -16,29 +16,32 @@ export default function Series({seriesData}) {
 				<Row xs="1" lg="2">
 					<Col>
 						<h1>Series</h1>
-						<section className="series">
-							{seriesData.series.map(series => (
-								<div key={series.nameURL} className="series-entry">
-									<Link href="/blog/series/[...slug]" as={`/blog/series/${series.nameURL}`}>
-										<a>{series.name}</a>
-									</Link>
-									<Badge pill>{series.entryCount}</Badge>
+						<section className="series series-posts">
+							<ul>
+								{seriesData.series.map(series => (
+									<li key={series.nameURL} className="series-entry">
+										<Link href="/blog/series/[...slug]" as={`/blog/series/${series.nameURL}`}>
+											<a>{series.name}</a>
+										</Link>
+										<Badge pill>{series.entryCount}</Badge>
 
-									<div className="publish-date">
-										{series.publishDate}
-									</div>
-									<span className="list-teaser">
-										{series.contentTeaser}
-									</span>
-								</div>
-							))}
+										<div className="publish-date">
+											{series.publishDate}
+										</div>
+										<span className="list-teaser">
+											{series.contentTeaser}
+										</span>
+									</li>
+								))}
+							</ul>
 						</section>
 					</Col>
 					<Col>
-						<Aside	topCategories	= {seriesData.topCategories}
-								latestPosts		= {seriesData.latestPosts}
-								latestComments	= {seriesData.latestComments}
-								latestSeries	= {seriesData.latestSeries} />
+						<Aside	topCategories		= {seriesData.topCategories}
+								latestPosts			= {seriesData.latestPosts}
+								latestComments		= {seriesData.latestComments}
+								latestSeries		= {seriesData.latestSeries}
+								latestImagePosts	= {seriesData.latestImagePosts} />
 					</Col>
 				</Row>
 			</Container>

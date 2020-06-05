@@ -261,7 +261,7 @@ body {
 			}
 		}
 
-		.series-posts {
+		.series-posts, .image-posts, .category-posts {
 			ul {
 				list-style-type: none;
 				padding-left: 5px;
@@ -327,8 +327,8 @@ body {
 			}
 		}
 
-		.category-posts, .series, .categories {
-			.category-post, .series-entry, .category {
+		.category-posts, .series, .categories, .image-posts {
+			.category-post, .series-entry, .category, .image-post-entry {
 				margin-bottom: 30px;
 
 				.publish-date {
