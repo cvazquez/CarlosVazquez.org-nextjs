@@ -34,7 +34,9 @@ export default function Categories({ categoryData }) {
 									<div className="publish-date">
 										{post.publishDate}
 									</div>
-									{post.contentTeaser}
+									<span className="list-teaser">
+										{post.contentTeaser}
+									</span>
 								</div>
 							))
 						}

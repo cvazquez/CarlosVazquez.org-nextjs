@@ -32,7 +32,8 @@ $menu-background-color: $color-white-smoke;
 $a-link-weight: 600;
 $separator-border-width: 1px;
 $separator-border-style: solid;
-$size-subtext: .75rem;
+$font-size-subtext: .75rem;
+$font-size-badge: .7rem;
 
 body {
 	background-color: $background-color;
@@ -326,14 +327,23 @@ body {
 			}
 		}
 
-		.category-posts, .series {
-			.category-post, .series-entry {
+		.category-posts, .series, .categories {
+			.category-post, .series-entry, .category {
 				margin-bottom: 30px;
 
 				.publish-date {
-					font-size: $size-subtext;
+					font-size: $font-size-subtext;
+				}
+
+				.badge {
+					margin-left: 8px;
+					font-size: $font-size-badge;
 				}
 			}
+		}
+
+		.list-teaser {
+			font-size: .85rem;
 		}
 	}
 
@@ -351,12 +361,13 @@ body {
 
 				.badge {
 					margin-left: 5px;
+					font-size: $font-size-badge;
 				}
 			}
 		}
 
 		.aside-sub-section {
-			font-size: $size-subtext;
+			font-size: $font-size-subtext;
 		}
 	}
 }

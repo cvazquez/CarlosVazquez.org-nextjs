@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import fetch from 'node-fetch'
 import Link from 'next/link'
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Badge } from 'reactstrap';
 import Layout from "../../../components/blog/layouts/Layout";
 import Aside from "../../../components/blog/layouts/AsideRight"
 
@@ -22,12 +22,14 @@ export default function Series({seriesData}) {
 									<Link href="/blog/series/[...slug]" as={`/blog/series/${series.nameURL}`}>
 										<a>{series.name}</a>
 									</Link>
-									&nbsp;({series.entryCount})
+									<Badge pill>{series.entryCount}</Badge>
 
 									<div className="publish-date">
 										{series.publishDate}
 									</div>
-									{series.contentTeaser}
+									<span className="list-teaser">
+										{series.contentTeaser}
+									</span>
 								</div>
 							))}
 						</section>

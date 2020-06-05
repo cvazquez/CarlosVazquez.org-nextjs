@@ -34,7 +34,9 @@ export default function Series({ seriesEntriesData }) {
 									<div className="publish-date">
 										{entry.publishDate}
 									</div>
-									{entry.teaser}
+									<span className="list-teaser">
+										{entry.teaser}
+									</span>
 								</div>
 							))
 						}

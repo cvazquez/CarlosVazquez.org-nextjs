@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import fetch from 'node-fetch'
 import Link from 'next/link'
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Badge } from 'reactstrap';
 import Layout from "../../../components/blog/layouts/Layout";
 import Aside from "../../../components/blog/layouts/AsideRight"
 
@@ -18,13 +18,14 @@ export default function Categories({categoryData}) {
 						<h1>Categories</h1>
 						<section className="categories">
 							{categoryData.categories.map(category => (
-								<div key={category.nameURL}>
-									<p>
-										<Link href="/blog/category/[...slug]" as={`/blog/category/${category.nameURL}`}>
-											<a>{category.name}</a>
-										</Link>
-										&nbsp;({category.entryCount})
-									</p>
+								<div key={category.nameURL} className="category">
+									<Link href="/blog/category/[...slug]" as={`/blog/category/${category.nameURL}`}>
+										<a>{category.name}</a>
+									</Link>
+									<Badge pill>{category.entryCount}</Badge>
+									<div className="list-teaser">
+										{category.teaser}
+									</div>
 								</div>
 							))}
 						</section>

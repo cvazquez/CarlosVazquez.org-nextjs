@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Badge } from 'reactstrap'
 
 export default ({latestSeries}) => (
 		<aside>
@@ -8,7 +9,10 @@ export default ({latestSeries}) => (
 			<ul>
 				{latestSeries.map(series => (
 					<li key={series.nameURL}>
-						{series.name}
+						<Link href="/blog/series/[.../slug]" as={`/blog/series/${series.nameURL}`}>
+							<a>{series.name}</a>
+						</Link>
+						<Badge pill>{series.entryCount}</Badge>
 					</li>
 				))}
 				<li>
