@@ -85,8 +85,8 @@ export default class SlideShow extends React.Component {
 				imageWidth		= event.target.width,
 				percentSwiped	= absDirectionX/imageWidth;
 
-		if(percentSwiped > .5) {
-			// Only accept swipe if over 50% of image width is swipped
+		if(percentSwiped > .25) {
+			// Only accept swipe if over 25% of image width is swipped
 			if(directionX < 0) {
 				this.slideImage("right");
 			} else {
