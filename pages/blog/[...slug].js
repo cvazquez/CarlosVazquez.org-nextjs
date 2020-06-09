@@ -10,6 +10,33 @@ import Aside from "../../components/blog/layouts/AsideRight"
 import SlideShow from "../../components/blog/slideShow"
 
 export default class PostPage extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			slideShow 	: this.slideShow(props.post),
+			blogPostId	: props.post.blogPost.id
+		}
+	}
+
+	slideShow(post) {
+		return Object.keys(post.flikrImages).length ? (
+				<section className="slide-show">
+					<SlideShow	flikrImages = {post.flikrImages}
+								postId		= {post.blogPost.id} />
+				</section>
+		) : null;
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if(this.props.post.blogPost.id !== prevState.blogPostId) {
+			this.setState({
+				slideShow	: this.slideShow(this.props.post),
+				blogPostId	: this.props.post.blogPost.id
+			});
+		}
+	}
+
 	render() {
 		return (
 			<Layout>
@@ -31,13 +58,7 @@ export default class PostPage extends Component {
 										<div dangerouslySetInnerHTML={{ __html: this.props.post.blogPost.content.replace("class", "className") }} />
 									</section>
 
-									{Object.keys(this.props.post.flikrImages).length ?
-										<section className="slide-show">
-											<SlideShow flikrImages = {this.props.post.flikrImages} />
-										</section>
-										: null
-									}
-
+									{this.state.slideShow}
 
 									{Object.keys(this.props.post.seriesPosts).length ?
 										<section className="series-posts">
@@ -64,7 +85,6 @@ export default class PostPage extends Component {
 			</Layout>
 		)
 	}
-
 }
 
 export async function getStaticPaths() {

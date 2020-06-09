@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 export default class SlideShow extends React.Component {
 	constructor(props) {
-		super();
+		super(props);
 
 		this.imageStates = {};
 		this.imageStateIndex = 0;
@@ -15,27 +15,18 @@ export default class SlideShow extends React.Component {
 
 
 		// ************** Pagination by left/right arrow (caret) ************
-		props.flikrImages.map((flikrImage, index) => {
-			this.imageStates[index] = {
-				index		: index,
-				id			: flikrImage.id,
-				mediumURL	: flikrImage.mediumurl,
-				title		: flikrImage.title
-			};
-		})
-		this.state = this.imageStates[this.imageStateIndex];
-
-		this.handleNextPrevImageCLick = this.handleNextPrevImageCLick.bind(this);
+		this.getUpdatedImages(props.flikrImages);
 
 
 		// ************ PAGINATION By Page Number ***************
-		this.imagePagination = [];
 		this.handlePageNumberClick = this.handlePageNumberClick.bind(this);
 
-		for(let x = 0; x < this.imagesLength; x++) {
-			this.imagePagination.push(<li key={x} onClick={this.handlePageNumberClick} data-page={x}>{x+1}</li>);
-		}
+		this.state = {
+			image		: this.imageStates[this.imageStateIndex],
+			pagination	: this.getImagePagination()
+		};
 
+		this.handleNextPrevImageCLick = this.handleNextPrevImageCLick.bind(this);
 
 		// ********** Handle Image Swipe ********
 		this.handleTouchMove = this.handleTouchMove.bind(this);
@@ -51,7 +42,10 @@ export default class SlideShow extends React.Component {
 			(this.imageStateIndex >= this.imagesLength-1 ? 0 : this.imageStateIndex + 1)
 			);
 
-		this.setState(this.imageStates[this.imageStateIndex]);
+		this.setState({
+			image		: this.imageStates[this.imageStateIndex],
+			pagination	: this.getImagePagination()
+		});
 	}
 
 	handleNextPrevImageCLick(event) {
@@ -59,7 +53,11 @@ export default class SlideShow extends React.Component {
 	}
 
 	handlePageNumberClick(event) {
-		this.setState(this.imageStates[event.currentTarget.dataset.page]);
+		this.imageStateIndex = parseInt(event.currentTarget.dataset.page);
+		this.setState({
+			image		: this.imageStates[this.imageStateIndex],
+			pagination	: this.getImagePagination()
+		});
 	}
 
 	// touchstart handler
@@ -93,36 +91,94 @@ export default class SlideShow extends React.Component {
 				this.slideImage("left");
 			}
 		}
-  	}
+	  }
+
+	getUpdatedImages(flikrImage) {
+		this.imageStates = {};
+		this.imageStateIndex = 0;
+		this.imagesLength = flikrImage.length;
+
+		flikrImage.map((flikrImage, index) => {
+			this.imageStates[index] = {
+				index			: index,
+				id				: flikrImage.id,
+				squareURL		: flikrImage.squareURL,
+				squareWidth		: flikrImage.squareWidth,
+				squareHeight	: flikrImage.squareHeight,
+				smallURL		: flikrImage.smallURL,
+				smallWidth		: flikrImage.smallWidth,
+				smallHeight		: flikrImage.smallHeight,
+				mediumURL		: flikrImage.mediumURL,
+				mediumWidth		: flikrImage.mediumWidth,
+				mediumHeight	: flikrImage.mediumHeight,
+				largeURL		: flikrImage.largeURL,
+				largeWidth		: flikrImage.largeWidth,
+				largeHeight		: flikrImage.largeHeight,
+				title			: flikrImage.title,
+				description		: flikrImage.description,
+				srcSet			: `${flikrImage.squareURL} ${flikrImage.squareWidth}w,
+									${flikrImage.smallURL} ${flikrImage.smallWidth}w,
+									${flikrImage.mediumURL} ${flikrImage.mediumWidth}w,
+									${flikrImage.largeURL} ${flikrImage.largeWidth}w`,
+				sizes			: `(max-width: ${flikrImage.squareWidth}px) ${flikrImage.squareWidth}px,
+									(max-width: ${flikrImage.smallWidth}px) ${flikrImage.smallWidth}px,
+									(max-width: ${flikrImage.mediumWidth}px) ${flikrImage.mediumWidth}px,
+									(max-width: ${flikrImage.largeWidth}px) ${flikrImage.largeWidth}px`
+			};
+		});
+	}
+
+	getImagePagination() {
+		let imagePagination = [];
+
+		// Creat list of page numbers
+		for(let x = 0; x < this.imagesLength; x++) {
+			imagePagination.push(<li key={x} onClick={this.handlePageNumberClick} data-page={x}>{x+1}</li>);
+		}
+
+		return imagePagination;
+	}
+
+	componentDidUpdate(prevProps) {
+		if(this.props.postId !== prevProps.postId) {
+			this.getUpdatedImages(this.props.flikrImages);
+			this.setState({
+				image		: this.imageStates[this.imageStateIndex],
+				pagination	: this.getImagePagination()
+			});
+		}
+	}
 
 	render() {
 		return (
 			<div>
 				<Container>
 					<Row>
-						<Col md="1" className="caret caret-left d-none d-sm-block" onClick={this.handleNextPrevImageCLick}>&lt;</Col>
-						<Col md="10" className="slide-show-image-col">
+						<Col md="1" className="caret caret-left d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&lt;</Col>
+						<Col xs="12" md="10" className="slide-show-image-col">
 							<ul className="slide-show-list">
-								<li key={this.state.id}>
+								<li key={this.state.image.id}>
 									{/* Link to Larger Image */}
 									<img	id				= "slide-show-image"
-											src				= {this.state.mediumURL}
+											srcSet			= {this.state.image.srcSet}
+											sizes			= {this.state.image.sizes}
+											src				= {this.state.image.mediumURL}
+											alt				= {this.state.image.title}
 											onTouchMove		= {this.handleTouchMove}
 											onTouchStart	= {this.handleTouchStart}
 											onTouchEnd		= {this.handleTouchEnd} />
-									<br />
-									<span className="slide-show-image-caption">{this.state.title}</span>
-									<br />
-									{this.state.index + 1}/{this.imagesLength}
-									<br />
-									<ul className="image-pagination">
-										{this.imagePagination}
-									</ul>
 
+									<div className="slide-show-image-caption">{this.state.image.title}</div>
+									<div className="slide-show-image-description">{this.state.image.description}</div>
+									<div>{this.state.image.index + 1}/{this.imagesLength}</div>
+
+									<ul className="image-pagination">
+										{this.state.pagination}
+									</ul>
 								</li>
 							</ul>
 						</Col>
-						<Col md="1" className="caret caret-right d-none d-sm-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col>
+						<Col md="1" className="caret caret-right d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col>
 					</Row>
 				</Container>
 			</div>
