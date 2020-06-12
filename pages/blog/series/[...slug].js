@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Container, Row, Col } from 'reactstrap';
 import Layout from "../../../components/blog/layouts/Layout";
-import fetch from 'node-fetch'
 import Aside from "../../../components/blog/layouts/AsideRight"
 
 export default function Series({ seriesEntriesData }) {
@@ -12,6 +11,8 @@ export default function Series({ seriesEntriesData }) {
 	if(router.isFallback) {
 		return <div>Loading...</div>
 	}
+
+	if(!Object.keys(seriesEntriesData).length) return (<div>Missing Props</div>);
 
 	return (
 		<Layout>
@@ -56,16 +57,36 @@ export default function Series({ seriesEntriesData }) {
 }
 
 export async function getStaticPaths() {
-	const	res		= await fetch(`${process.env.global.apiURL}/blog/api/getSeriesPages`),
-			page	= await res.json(),
-			paths	= page.series.map(series => `/blog/series/${series.nameURL}`)
+	const apiPath = "/blog/api/getSeriesPages";
 
-	return { paths, fallback: false }
+	try {
+		const	res 	= await fetch(process.env.global.apiURL + apiPath),
+				page 	= await res.json(),
+				paths	= page.series.map(series => `/blog/series/${series.nameURL}`)
+
+		return { paths, fallback: false }
+	} catch(e) {
+		console.log("ERROR: ${apiPath} request failed");
+
+		return { paths : [], fallback: true }
+	}
 }
 
 export async function getStaticProps({ params }) {
-	const	res					= await fetch(`${process.env.global.apiURL}/blog/api/getSeriesPage/${params.slug}`),
-			seriesEntriesData	= await res.json();
+	const apiPath = `/blog/api/getSeriesPage/${params.slug}`;
 
-  return { props: { seriesEntriesData } }
+	try {
+		const	seriesEntriesRes 	= await fetch(process.env.global.apiURL + apiPath),
+				seriesEntriesData	= await seriesEntriesRes.json();
+
+		return {
+			props	: {
+						seriesEntriesData
+			}
+		}
+	} catch(e) {
+		console.log(`ERROR: ${apiPath} request failed`);
+
+		return { props: {} }
+	}
 }

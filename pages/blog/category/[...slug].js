@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Container, Row, Col } from 'reactstrap';
 import Layout from "../../../components/blog/layouts/Layout";
-import fetch from 'node-fetch'
 import Aside from "../../../components/blog/layouts/AsideRight"
 
 export default function Categories({ categoryData }) {
@@ -12,6 +11,8 @@ export default function Categories({ categoryData }) {
 	if(router.isFallback) {
 		return <div>Loading...</div>
 	}
+
+	if(!Object.keys(categoryData).length) return (<div>Missing Props</div>);
 
 	return (
 		<Layout>
@@ -56,16 +57,32 @@ export default function Categories({ categoryData }) {
 }
 
 export async function getStaticPaths() {
-	const	res		= await fetch(`${process.env.global.apiURL}/blog/api/getCategoriesPage`),
-			page	= await res.json(),
-			paths	= page.categories.map(category => `/blog/category/${category.nameURL}`)
+	const apiPath = "/blog/api/getCategoriesPage";
 
-  return { paths, fallback: false }
+	try {
+		const	res 	= await fetch(process.env.global.apiURL + apiPath),
+				page 	= await res.json(),
+				paths	= page.categories.map(category => `/blog/category/${category.nameURL}`);
+
+		return { paths, fallback: false }
+	} catch(e) {
+		console.log("ERROR: ${apiPath} request failed");
+
+		return { paths : [], fallback: true }
+	}
 }
 
 export async function getStaticProps({ params }) {
-	const	res				= await fetch(`${process.env.global.apiURL}/blog/api/getCategoryPageByName/${params.slug}`),
-			categoryData	= await res.json();
+	const apiPath = `/blog/api/getCategoryPageByName/${params.slug}`;
 
-  return { props: { categoryData } }
+	try {
+		const	res = await fetch(process.env.global.apiURL + apiPath),
+		categoryData = await res.json();
+
+		return { props: { categoryData, }, };
+	} catch(e) {
+		console.log(`ERROR: ${apiPath} request failed`);
+
+		return { props: {} }
+	}
 }

@@ -1,11 +1,13 @@
 import Head from 'next/head'
-import fetch from 'node-fetch'
 import Link from 'next/link'
 import { Container, Row, Col, Badge } from 'reactstrap';
 import Layout from "../../../components/blog/layouts/Layout";
 import Aside from "../../../components/blog/layouts/AsideRight"
 
 export default function Series({seriesData}) {
+
+	if(!Object.keys(seriesData).length) return (<div>Missing Props</div>);
+
 	return(
 		<Layout>
 			<Head>
@@ -50,12 +52,20 @@ export default function Series({seriesData}) {
 }
 
 export async function getStaticProps() {
-	const	seriesRes	= await fetch(`${process.env.global.apiURL}/blog/api/getSeriesPages`),
-			seriesData	= await seriesRes.json();
+	const apiPath = "/blog/api/getSeriesPages";
 
-	return {
-		props	: {
-				seriesData
+	try {
+		const	seriesRes 	= await fetch(process.env.global.apiURL + apiPath),
+				seriesData	= await seriesRes.json();
+
+		return {
+			props	: {
+						seriesData
+			}
 		}
+	} catch(e) {
+		console.log(`ERROR: ${apiPath} request failed`);
+
+		return { props: {} }
 	}
 }

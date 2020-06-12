@@ -1,5 +1,4 @@
 // pages/blog/[..slug].js
-import fetch from 'node-fetch'
 import Layout from "../../components/blog/layouts/Layout";
 import Head from 'next/head'
 import { Container, Row, Col } from 'reactstrap';
@@ -13,9 +12,11 @@ export default class PostPage extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			slideShow 	: this.slideShow(props.post),
-			blogPostId	: props.post.blogPost.id
+		if(props.post) {
+			this.state = {
+				slideShow 	: this.slideShow(props.post),
+				blogPostId	: props.post.blogPost.id
+			}
 		}
 	}
 
@@ -29,7 +30,7 @@ export default class PostPage extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(this.props.post.blogPost.id !== prevState.blogPostId) {
+		if(Object.keys(this.props).length && this.props.post.blogPost.id !== prevState.blogPostId) {
 			this.setState({
 				slideShow	: this.slideShow(this.props.post),
 				blogPostId	: this.props.post.blogPost.id
@@ -38,6 +39,8 @@ export default class PostPage extends Component {
 	}
 
 	render() {
+		if(!Object.keys(this.props).length) return (<div>Missing Props</div>);
+
 		return (
 			<Layout>
 				<main>
@@ -88,16 +91,32 @@ export default class PostPage extends Component {
 }
 
 export async function getStaticPaths() {
-	const	res 	= await fetch(`${process.env.global.apiURL}/blog/api/getPostSlugs`),
-			posts 	= await res.json(),
-			paths	= posts.postSlugs.map(post => `/blog/${post.titleURL}`);
+	const apiPath = "/blog/api/getPostSlugs";
 
-  return { paths, fallback: false }
+	try {
+		const	res 	= await fetch(process.env.global.apiURL + apiPath),
+				posts 	= await res.json(),
+				paths	= posts.postSlugs.map(post => `/blog/${post.titleURL}`);
+
+		return { paths, fallback: false }
+	} catch(e) {
+		console.log("ERROR: ${apiPath} request failed");
+
+		return { paths : [], fallback: true }
+	}
 }
 
 export async function getStaticProps({ params }) {
-	const	res = await fetch(`${process.env.global.apiURL}/blog/api/getPostPageByTitleURL/${params.slug}`),
-			post = await res.json();
+	const apiPath = `/blog/api/getPostPageByTitleURL/${params.slug}`;
 
-  return { props: { post, }, }
+	try {
+		const	res = await fetch(process.env.global.apiURL + apiPath),
+				post = await res.json();
+
+		return { props: { post, }, };
+	} catch(e) {
+		console.log(`ERROR: ${apiPath} request failed`);
+
+		return { props: {} }
+	}
 }

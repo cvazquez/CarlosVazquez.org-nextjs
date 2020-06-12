@@ -1,10 +1,11 @@
-import fetch from 'node-fetch'
 import { Container, Row, Col } from 'reactstrap';
 import Layout from "../../components/blog/layouts/Layout";
 import Aside from "../../components/blog/layouts/AsideRight"
 import Head from 'next/head'
 
 export default function Index({homeData}) {
+	if(!Object.keys(homeData).length) return (<div>Missing Props</div>)
+
 	return (
 		<Layout>
 			<Head>
@@ -40,13 +41,52 @@ export default function Index({homeData}) {
 	)
 }
 
-export async function getStaticProps() {
-	const	homeRes = await fetch(`http://dev.react-api.carlosvazquez.org/blog/api`),
+export /* async */ function getStaticProps() {
+	const apiURL = "/blog/api";
+	// ASYNC VERSION
+	/* const	homeRes = await fetch(process.env.global.apiURL + apiURL`),
 			homeData = await homeRes.json();
+
 
 	return {
 		props:	{
 			homeData,
 		}
-	}
+	} */
+
+	// Promise Version
+	return new Promise((resolve, reject) => {
+		fetch(process.env.global.apiURL + apiURL)
+			.then(res => res.json())
+			.then(
+				result => resolve({
+						props:	{
+							homeData : result
+						}
+					}),
+				error => {
+					console.log(error);
+					reject(`RESULT ERROR: ${apiURL} request failed!`);
+				}
+			).catch( err => {
+					console.log(err);
+					console.log(`CATCH ERROR: ${apiURL} request failed!`);
+
+					return ({
+						props:	{
+							homeData : {}
+						}
+					})
+				}
+			)
+	}).catch(err => {
+		console.log("Promise Catch");
+		console.log(err);
+
+		return ({
+			props:	{
+				homeData : {}
+			}
+		})
+	})
 }

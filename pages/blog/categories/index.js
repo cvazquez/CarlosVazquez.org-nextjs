@@ -1,11 +1,13 @@
 import Head from 'next/head'
-import fetch from 'node-fetch'
 import Link from 'next/link'
 import { Container, Row, Col, Badge } from 'reactstrap';
 import Layout from "../../../components/blog/layouts/Layout";
 import Aside from "../../../components/blog/layouts/AsideRight"
 
 export default function Categories({categoryData}) {
+
+	if(!Object.keys(categoryData).length) return (<div>Missing Props</div>);
+
 	return(
 		<Layout>
 			<Head>
@@ -46,12 +48,20 @@ export default function Categories({categoryData}) {
 }
 
 export async function getStaticProps() {
-	const	categoryRes		= await fetch(`${process.env.global.apiURL}/blog/api/getCategoriesPage`),
-			categoryData	= await categoryRes.json();
+	const apiPath = "/blog/api/getCategoriesPage";
 
-	return {
-		props	: {
-					categoryData
+	try {
+		const	categoryRes 	= await fetch(process.env.global.apiURL + apiPath),
+				categoryData	= await categoryRes.json();
+
+		return {
+			props	: {
+						categoryData
+			}
 		}
+	} catch(e) {
+		console.log(`ERROR: ${apiPath} request failed`);
+
+		return { props: {} }
 	}
 }
