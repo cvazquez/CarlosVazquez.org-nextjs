@@ -9,7 +9,7 @@ export default class SeriesPosts extends React.Component {
 
 		return (
 			<div className="series-posts">
-				<h2>Related Posts</h2>
+				<h1>Related Posts</h1>
 				<ul>
 				{	seriesFiltered.map(post => (
 						<li key={post.entryId}>

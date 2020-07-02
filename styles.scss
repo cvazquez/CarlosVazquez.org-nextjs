@@ -11,6 +11,7 @@ $color-white-smoke: #F1F1F1;
 $color-gray-smoke: #e9e9e9;
 $color-very-light-gray: #cdcdcd;
 $color-nero: #232323;
+$color-raven: #6c757d;
 
 // Colors applied
 $primary-text-color: $color-knight-rider;
@@ -24,6 +25,7 @@ $a-hover-underline: $color-grape;
 $a-visited: $color-midgrey;
 $a-link: $color-midgrey;
 $a-link-color: $color-san-marino;
+$h2-color: $color-raven;
 $menu-hamburger-color: $color-very-light-gray;
 $menu-close-cross-color: $color-nero;
 $menu-background-color: $color-white-smoke;
@@ -84,8 +86,15 @@ body {
 		margin-bottom: 1.75rem;
 	}
 
+	.series-posts h1,
+	.comments h1 {
+		margin: 1.5rem 0 0.75rem;
+	}
+
 	h2 {
-		margin-bottom: 1.5rem;
+		margin: 1.5rem 0 0.75rem;
+		color: $h2-color;
+		font-size: 1.75rem;
 	}
 
 	h3 {

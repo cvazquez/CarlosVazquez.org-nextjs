@@ -79,7 +79,7 @@ export default class Comments extends Component {
 		return (
 			<section className="comments">
 				<header>
-					<h2>Comments</h2>
+					<h1>Comments</h1>
 				</header>
 				{
 				displayComments.map(comment => (
