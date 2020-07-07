@@ -118,12 +118,14 @@ export default class SlideShow extends React.Component {
 				description		: flikrImage.description,
 				srcSet			: `${flikrImage.squareURL} ${flikrImage.squareWidth}w,
 									${flikrImage.smallURL} ${flikrImage.smallWidth}w,
-									${flikrImage.mediumURL} ${flikrImage.mediumWidth}w,
-									${flikrImage.largeURL} ${flikrImage.largeWidth}w`,
+									${flikrImage.mediumURL} ${flikrImage.mediumWidth}w`
+									+
+									(flikrImage.largeWidth !== null && flikrImage.largeWidth < 1000 ? `, ${flikrImage.largeURL} ${flikrImage.largeWidth}w` : ''),
 				sizes			: `(max-width: ${flikrImage.squareWidth}px) ${flikrImage.squareWidth}px,
 									(max-width: ${flikrImage.smallWidth}px) ${flikrImage.smallWidth}px,
-									(max-width: ${flikrImage.mediumWidth}px) ${flikrImage.mediumWidth}px,
-									(max-width: ${flikrImage.largeWidth}px) ${flikrImage.largeWidth}px`
+									(max-width: ${flikrImage.mediumWidth}px) ${flikrImage.mediumWidth}px`
+									+
+									(flikrImage.largeWidth !== null && flikrImage.largeWidth < 1000 ? `, (max-width: ${flikrImage.largeWidth}px) ${flikrImage.largeWidth}px` : '')
 			};
 		});
 	}
@@ -137,6 +139,20 @@ export default class SlideShow extends React.Component {
 		}
 
 		return imagePagination;
+	}
+
+	preCacheImages() {
+		return (
+		Object.keys(this.imageStates).map(image =>
+			<img	style	= {{display : "none"}}
+			className		= "pre-cached-images"
+			srcSet			= {this.imageStates[image].srcSet}
+			sizes			= {this.imageStates[image].sizes}
+			src				= {this.imageStates[image].mediumURL}
+			alt				= {this.imageStates[image].title}
+			loading			= "lazy"
+			key				= {image} />
+		))
 	}
 
 	componentDidUpdate(prevProps) {
@@ -166,7 +182,11 @@ export default class SlideShow extends React.Component {
 											alt				= {this.state.image.title}
 											onTouchMove		= {this.handleTouchMove}
 											onTouchStart	= {this.handleTouchStart}
-											onTouchEnd		= {this.handleTouchEnd} />
+											onTouchEnd		= {this.handleTouchEnd}
+											style			= {{
+												height	: "100%",
+												width	: "100%"
+											}} />
 
 									<div className="slide-show-image-caption">{this.state.image.title}</div>
 									<div className="slide-show-image-description">{this.state.image.description}</div>
@@ -181,6 +201,7 @@ export default class SlideShow extends React.Component {
 						<Col md="1" className="caret caret-right d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col>
 					</Row>
 				</Container>
+				{this.preCacheImages()}
 			</div>
 		)
 	}
