@@ -174,19 +174,23 @@ export default class SlideShow extends React.Component {
 						<Col xs="12" md="10" className="slide-show-image-col">
 							<ul className="slide-show-list">
 								<li key={this.state.image.id}>
-									{/* Link to Larger Image */}
-									<img	id				= "slide-show-image"
-											srcSet			= {this.state.image.srcSet}
-											sizes			= {this.state.image.sizes}
-											src				= {this.state.image.mediumURL}
-											alt				= {this.state.image.title}
-											onTouchMove		= {this.handleTouchMove}
-											onTouchStart	= {this.handleTouchStart}
-											onTouchEnd		= {this.handleTouchEnd}
-											style			= {{
-												height	: "100%",
-												width	: "100%"
-											}} />
+
+
+									<div className="image-container">
+									{/* TODO - Link to Larger Image in lightbox */}
+										<img	id				= "slide-show-image"
+												srcSet			= {this.state.image.srcSet}
+												sizes			= {this.state.image.sizes}
+												src				= {this.state.image.mediumURL}
+												alt				= {this.state.image.title}
+												onTouchMove		= {this.handleTouchMove}
+												onTouchStart	= {this.handleTouchStart}
+												onTouchEnd		= {this.handleTouchEnd}
+												style			= {{
+													height	: "100%",
+													width	: "100%"
+												}} />
+									</div>
 
 									<div className="slide-show-image-caption">{this.state.image.title}</div>
 									<div className="slide-show-image-description">{this.state.image.description}</div>
