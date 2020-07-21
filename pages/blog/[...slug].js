@@ -58,7 +58,7 @@ export default class PostPage extends Component {
 									</header>
 
 									<section className="post">
-										<div dangerouslySetInnerHTML={{ __html: this.props.post.blogPost.content.replace("class", "className") }} />
+										<div dangerouslySetInnerHTML={{ __html: this.props.post.blogPost[0].content.replace("class=", "className=") }} />
 									</section>
 
 									{this.state.slideShow}

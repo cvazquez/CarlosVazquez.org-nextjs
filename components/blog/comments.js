@@ -67,7 +67,7 @@ export default class Comments extends Component {
 
 	render() {
 		const	{ postComments } 	= this.props.post,
-				{ id }				= this.props.post.blogPost,
+				{ id }				= this.props.post.blogPost[0],
 				displayReplies		= {},
 				displayComments		= [];
 

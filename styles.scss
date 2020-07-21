@@ -74,7 +74,7 @@ body {
 	}
 
 	code {
-		display: block;
+		display: inline-table;
 		margin: 20px 0px;
 		border: $separator-border-width $separator-border-style $border-light-color;
 		border-radius: 10px;
