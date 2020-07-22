@@ -15,7 +15,7 @@ export default class PostPage extends Component {
 		if(props.post) {
 			this.state = {
 				slideShow 	: this.slideShow(props.post),
-				blogPostId	: props.post.blogPost.id
+				blogPostId	: props.post.blogPost[0].id
 			}
 		}
 	}
@@ -30,10 +30,10 @@ export default class PostPage extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(Object.keys(this.props).length && this.props.post.blogPost.id !== prevState.blogPostId) {
+		if(Object.keys(this.props).length && this.props.post.blogPost[0].id !== prevState.blogPostId) {
 			this.setState({
 				slideShow	: this.slideShow(this.props.post),
-				blogPostId	: this.props.post.blogPost.id
+				blogPostId	: this.props.post.blogPost[0].id
 			});
 		}
 	}
@@ -45,7 +45,7 @@ export default class PostPage extends Component {
 			<Layout>
 				<main>
 					<Head>
-						<title key="title">{this.props.post.blogPost.title} - {process.env.global.title}</title>
+						<title key="title">{this.props.post.blogPost[0].title} - {process.env.global.title}</title>
 						<script type="text/javascript" src="/javascripts/tracking.js" defer />
 					</Head>
 
@@ -54,7 +54,7 @@ export default class PostPage extends Component {
 							<Col xs="12" md="8">
 								<article>
 									<header>
-										<h1>{this.props.post.blogPost.title}</h1>
+										<h1>{this.props.post.blogPost[0].title}</h1>
 									</header>
 
 									<section className="post">
@@ -66,7 +66,7 @@ export default class PostPage extends Component {
 									{Object.keys(this.props.post.seriesPosts).length ?
 										<section className="series-posts">
 											<SeriesPosts	series			= {this.props.post.seriesPosts}
-															originalPostId	= {this.props.post.blogPost.id}
+															originalPostId	= {this.props.post.blogPost[0].id}
 											/>
 										</section>
 										: null
