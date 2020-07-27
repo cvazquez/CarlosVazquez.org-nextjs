@@ -24,7 +24,7 @@ export default class PostPage extends Component {
 		return Object.keys(post.flikrImages).length ? (
 				<section className="slide-show">
 					<SlideShow	flikrImages = {post.flikrImages}
-								postId		= {post.blogPost.id} />
+								postId		= {post.blogPost[0].id} />
 				</section>
 		) : null;
 	}
@@ -41,8 +41,7 @@ export default class PostPage extends Component {
 	render() {
 		if(!Object.keys(this.props).length) return (<div>Missing Props</div>);
 
-		return (
-			<Layout>
+		return 	<Layout>
 				<main>
 					<Head>
 						<title key="title">{this.props.post.blogPost[0].title} - {process.env.global.title}</title>
@@ -55,6 +54,7 @@ export default class PostPage extends Component {
 								<article>
 									<header>
 										<h1>{this.props.post.blogPost[0].title}</h1>
+										<div className="publish-date">{this.props.post.blogPost[0].publishAt}</div>
 									</header>
 
 									<section className="post">
@@ -86,7 +86,6 @@ export default class PostPage extends Component {
 					</Container>
 				</main>
 			</Layout>
-		)
 	}
 }
 

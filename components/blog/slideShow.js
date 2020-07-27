@@ -12,6 +12,7 @@ export default class SlideShow extends React.Component {
 			startX	: 0,
 			endX	: 0
 		};
+		this.maxHeight = 0;
 
 
 		// ************** Pagination by left/right arrow (caret) ************
@@ -99,6 +100,8 @@ export default class SlideShow extends React.Component {
 		this.imagesLength = flikrImage.length;
 
 		flikrImage.map((flikrImage, index) => {
+			const largeImageLimit = flikrImage.largeWidth !== null && flikrImage.largeWidth < 600;
+
 			this.imageStates[index] = {
 				index			: index,
 				id				: flikrImage.id,
@@ -116,17 +119,20 @@ export default class SlideShow extends React.Component {
 				largeHeight		: flikrImage.largeHeight,
 				title			: flikrImage.title,
 				description		: flikrImage.description,
-				srcSet			: `${flikrImage.squareURL} ${flikrImage.squareWidth}w,
-									${flikrImage.smallURL} ${flikrImage.smallWidth}w,
-									${flikrImage.mediumURL} ${flikrImage.mediumWidth}w`
+				largeImageLimit,
+				srcSet			: `${flikrImage.squareURL} ${flikrImage.squareWidth}w,` +
+									`${flikrImage.smallURL} ${flikrImage.smallWidth}w,` +
+									`${flikrImage.mediumURL} ${flikrImage.mediumWidth}w`
 									+
-									(flikrImage.largeWidth !== null && flikrImage.largeWidth < 1000 ? `, ${flikrImage.largeURL} ${flikrImage.largeWidth}w` : ''),
-				sizes			: `(max-width: ${flikrImage.squareWidth}px) ${flikrImage.squareWidth}px,
-									(max-width: ${flikrImage.smallWidth}px) ${flikrImage.smallWidth}px,
-									(max-width: ${flikrImage.mediumWidth}px) ${flikrImage.mediumWidth}px`
+									(largeImageLimit ? `, ${flikrImage.largeURL} ${flikrImage.largeWidth}w` : ''),
+				sizes			: `(max-width: ${flikrImage.squareWidth}px) ${flikrImage.squareWidth}px,` +
+									`(max-width: ${flikrImage.smallWidth}px) ${flikrImage.smallWidth}px,` +
+									`(max-width: ${flikrImage.mediumWidth}px) ${flikrImage.mediumWidth}px`
 									+
-									(flikrImage.largeWidth !== null && flikrImage.largeWidth < 1000 ? `, (max-width: ${flikrImage.largeWidth}px) ${flikrImage.largeWidth}px` : '')
+									(largeImageLimit ? `, (max-width: ${flikrImage.largeWidth}px) ${flikrImage.largeWidth}px` : '')
 			};
+
+			this.maxHeight = largeImageLimit && flikrImage.largeHeight > this.maxHeight ? flikrImage.largeHeight : this.maxHeight;
 		});
 	}
 
@@ -174,9 +180,7 @@ export default class SlideShow extends React.Component {
 						<Col xs="12" md="10" className="slide-show-image-col">
 							<ul className="slide-show-list">
 								<li key={this.state.image.id}>
-
-
-									<div className="image-container">
+									<div className="image-container" style={{maxHeight : this.maxHeight}}>
 									{/* TODO - Link to Larger Image in lightbox */}
 										<img	id				= "slide-show-image"
 												srcSet			= {this.state.image.srcSet}
@@ -185,11 +189,7 @@ export default class SlideShow extends React.Component {
 												alt				= {this.state.image.title}
 												onTouchMove		= {this.handleTouchMove}
 												onTouchStart	= {this.handleTouchStart}
-												onTouchEnd		= {this.handleTouchEnd}
-												style			= {{
-													height	: "100%",
-													width	: "100%"
-												}} />
+												onTouchEnd		= {this.handleTouchEnd} />
 									</div>
 
 									<div className="slide-show-image-caption">{this.state.image.title}</div>
