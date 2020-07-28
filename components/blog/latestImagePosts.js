@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {Badge} from 'reactstrap';
 
-export default ({latestImagePosts}) => (
+const latestImagePosts = ({latestImagePosts}) =>
 	<aside>
 		<header>
 			<h3>Latest Image Posts</h3>
@@ -22,4 +22,5 @@ export default ({latestImagePosts}) => (
 			</li>
 		</ul>
 	</aside>
-);
+
+export default latestImagePosts;

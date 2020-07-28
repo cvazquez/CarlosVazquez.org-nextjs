@@ -7,7 +7,7 @@ function handleMenuLinkClick() {
 	document.getElementById("menu-checkbox").checked = false;
 }
 
-export default () => (
+const navBar = () =>
 	<nav role="navigation">
 		<div id="menu-toggle">
 			<input type="checkbox" id="menu-checkbox" />
@@ -46,4 +46,5 @@ export default () => (
 			</ul>
 		</div>
 	</nav>
-);
+
+export default navBar;

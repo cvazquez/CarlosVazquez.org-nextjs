@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Badge } from 'reactstrap'
 
-export default ({latestSeries}) => (
+const latestSeries = ({latestSeries}) =>
 		<aside>
 			<header>
 				<h3>Latest Series</h3>
@@ -22,4 +22,5 @@ export default ({latestSeries}) => (
 				</li>
 			</ul>
 		</aside>
-	);
+
+export default latestSeries;

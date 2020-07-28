@@ -5,7 +5,7 @@ import NavBar from "./NavBar";
 import React, {useState} from "react";
 
 
-export default props => {
+const layout = props => {
 	let [backgroundOverlay, setBackgroundOverlay] = useState("");
 
 	return	(
@@ -24,3 +24,5 @@ export default props => {
 		</div>
 	)
 }
+
+export default layout;
