@@ -82,8 +82,9 @@ body {
 		background-color: $background-color-hover;
 	}
 
-	h1 {
-		margin-bottom: 1.75rem;
+	header .publish-date {
+		font-size: $font-size-subtext;
+		margin-bottom: 1.5rem;
 	}
 
 	.series-posts h1,
@@ -221,7 +222,6 @@ body {
 
 		.slide-show {
 			margin: 40px 0px;
-			height: 480px;
 			display: inline;
 
 			.slide-show-image-col {
@@ -242,7 +242,7 @@ body {
 
 				.image-container {
 					width: 100%;
-					height: 100%;
+					height: 480px;
 
 					border: 12px $separator-border-style $separator-border-color;
 					border-radius: 12px;

@@ -4,10 +4,9 @@ import Aside from "../../components/blog/layouts/AsideRight"
 import Head from 'next/head'
 
 export default function Index({homeData}) {
-	if(!Object.keys(homeData).length) return (<div>Missing Props</div>)
+	if(!Object.keys(homeData).length) return <div>Missing Props</div>
 
-	return (
-		<Layout>
+	return	<Layout>
 			<Head>
 				{/* <script type="text/javascript" src="/javascripts/tracking.js" defer /> */}
 			</Head>
@@ -20,7 +19,7 @@ export default function Index({homeData}) {
 							</header>
 
 							<article>
-								<p>My name is Carlos Vazquez, and I am a FullStack Website Developer and adventurer.</p>
+								<p>My name is Carlos Vazquez, and I am a Full Stack Website Developer.</p>
 
 								<p>I developed this website using the following technologies:</p>
 									<ul>
@@ -86,7 +85,6 @@ export default function Index({homeData}) {
 				</Row>
 			</Container>
 		</Layout>
-	)
 }
 
 export /* async */ function getStaticProps() {
