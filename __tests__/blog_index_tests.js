@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen, cleanup, fireEvent, waitForElement } from '@testing-library/react';
-import {shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { render, cleanup } from '@testing-library/react';
 import Index  from '../pages/blog/index';
 import NotFound from '../pages/404.js';
 import Post from '../pages/blog/[...slug]';
+
+afterEach(cleanup);
 
 it('blog 404', () => {
 	const	{ getByText } = render(<NotFound />),
@@ -65,5 +65,4 @@ it('posts slug check with NO slideshow images', () => {
 			post = getByText(/This is test content/);
 
 	expect(post).toBeInTheDocument();
-	//expect(link.getAttribute('class')).toBe("test");
 });

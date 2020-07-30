@@ -48,10 +48,13 @@ export default class PostPage extends Component {
 	render() {
 		if(!Object.keys(this.props).length) return <div>Missing Props</div>;
 
+		// Jest doesn't like the global version, but then production breaks without it
+		const title = process.env.NEXT_PUBLIC_TITLE || (process.env.global && process.env.global.title ? process.env.global.title : '');
+
 		return 	<Layout>
 				<main>
 					<Head>
-						<title key="title">{this.props.post.blogPost[0].title} - {process.env.NEXT_PUBLIC_TITLE}</title>
+						<title key="title">{this.props.post.blogPost[0].title} - {title}</title>
 						<script type="text/javascript" src="/javascripts/tracking.js" defer />
 					</Head>
 
