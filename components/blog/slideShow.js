@@ -192,36 +192,35 @@ export default class SlideShow extends React.Component {
 				leftCaret	= imageCount > 1 ?
 								<Col md="1" className="caret caret-left d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&lt;</Col> : '',
 				rightCaret	= imageCount > 1 ?
-								<Col md="1" className="caret caret-right d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col> : '';
+								<Col md="1" className="caret caret-right d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col> : '',
+				pageCounts	= imageCount > 1 ?
+								<><div>{this.state.image.index + 1}/{this.imagesLength}</div>
+								<ul className="image-pagination">{this.state.pagination}</ul></> : '';
 
 		return 	<div>
 				<Container>
 					<Row>
 						{leftCaret}
-							<Col xs="12" md="10" className="slide-show-image-col">
-								<div	className	= "image-container"
-										style		= {{height 	: this.state.maxHeight+20}}>
-									{/* TODO - Link to Larger Image in lightbox */}
-									<img	id				= "slide-show-image"
-											srcSet			= {this.state.image.srcSet}
-											sizes			= {this.state.image.sizes}
-											alt				= {this.state.image.title}
-											onTouchMove		= {this.handleTouchMove}
-											onTouchStart	= {this.handleTouchStart}
-											onTouchEnd		= {this.handleTouchEnd}
-											style			= {{maxHeight	: this.state.maxHeight+1,
-																maxWidth	: this.state.maxWidth+1,
-																width		: "100%"}} />
-									</div>
+						<Col xs="12" md="10" className="slide-show-image-col">
+							<div	className	= "image-container"
+									style		= {{height 	: this.state.maxHeight+20}}>
+								{/* TODO - Link to Larger Image in lightbox */}
+								<img	id				= "slide-show-image"
+										srcSet			= {this.state.image.srcSet}
+										sizes			= {this.state.image.sizes}
+										alt				= {this.state.image.title}
+										onTouchMove		= {this.handleTouchMove}
+										onTouchStart	= {this.handleTouchStart}
+										onTouchEnd		= {this.handleTouchEnd}
+										style			= {{maxHeight	: this.state.maxHeight+1,
+															maxWidth	: this.state.maxWidth+1,
+															width		: "100%"}} />
+								</div>
 
-								<div className="slide-show-image-caption">{this.state.image.title}</div>
-								<div className="slide-show-image-description">{this.state.image.description}</div>
-								<div>{this.state.image.index + 1}/{this.imagesLength}</div>
-
-								<ul className="image-pagination">
-									{this.state.pagination}
-								</ul>
-							</Col>
+							<div className="slide-show-image-caption">{this.state.image.title}</div>
+							<div className="slide-show-image-description">{this.state.image.description}</div>
+							{pageCounts}
+						</Col>
 						{rightCaret}
 					</Row>
 				</Container>
