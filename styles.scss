@@ -235,47 +235,49 @@ body {
 				font-weight: 900;
 			}
 
-			ul.slide-show-list {
-				list-style: none;
+			// create a padded container for the slideshow images
+			.image-container {
+				position: relative;
+				width: 100%;
+				border: 12px $separator-border-style $separator-border-color;
+				border-radius: 12px;
+				background-color: $separator-border-color;
+
+				// Center images in middle of container
+				img {
+					width: 100%;
+					height: 100%;
+					width: auto;
+					height: auto;
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					margin: auto;
+				}
+			}
+
+			.slide-show-image-caption {
+				font-weight: 500;
+			}
+
+			ul.image-pagination {
 				margin: 0;
 				padding: 0;
+				list-style-type: none;
+				overflow-wrap: anywhere;
 
-				.image-container {
-					width: 100%;
-					height: 480px;
-
-					border: 12px $separator-border-style $separator-border-color;
-					border-radius: 12px;
-					background-color: $separator-border-color;
+				li {
 					display: inline;
-
-					img {
-						width: 500px;
-						height: 100%;
-					}
+					margin: 0px 5px;
+					cursor: pointer;
+					color: $a-link-color;
 				}
 
-				.slide-show-image-caption {
-					font-weight: 500;
-				}
-
-				ul.image-pagination {
-					margin: 0;
-					padding: 0;
-					list-style-type: none;
-					overflow-wrap: anywhere;
-
-					li {
-						display: inline;
-						margin: 0px 5px;
-						cursor: pointer;
-						color: $a-link-color;
-					}
-
-					li:hover {
-						color: $a-hover-color;
-						border-bottom: $separator-border-width $separator-border-style $a-hover-underline;
-					}
+				li:hover {
+					color: $a-hover-color;
+					border-bottom: $separator-border-width $separator-border-style $a-hover-underline;
 				}
 			}
 		}

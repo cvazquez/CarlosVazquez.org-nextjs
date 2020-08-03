@@ -13,6 +13,7 @@ export default class SlideShow extends React.Component {
 			endX	: 0
 		};
 		this.maxHeight = 0;
+		this.maxWidth = 0;
 
 
 		// ************** Pagination by left/right arrow (caret) ************
@@ -24,7 +25,9 @@ export default class SlideShow extends React.Component {
 
 		this.state = {
 			image		: this.imageStates[this.imageStateIndex],
-			pagination	: this.getImagePagination()
+			pagination	: this.getImagePagination(),
+			maxHeight	: this.maxHeight,
+			maxWidth	: this.maxWidth
 		};
 
 		this.handleNextPrevImageCLick = this.handleNextPrevImageCLick.bind(this);
@@ -100,7 +103,10 @@ export default class SlideShow extends React.Component {
 		this.imagesLength = flikrImage.length;
 
 		flikrImage.map((flikrImage, index) => {
-			const largeImageLimit = flikrImage.largeWidth !== null && flikrImage.largeWidth < 600;
+			// Make sure the image width is less than 600 pixels, so we don't pull in an image too large for screen into the srcset
+			const	imageWidthLimit = 600,
+					overLargeImageWidthLimit = flikrImage.largeWidth !== null && flikrImage.largeWidth > imageWidthLimit,
+					overMediumImageWidthLimit = flikrImage.mediumWidth !== null && flikrImage.mediumWidth > imageWidthLimit;
 
 			this.imageStates[index] = {
 				index			: index,
@@ -119,20 +125,28 @@ export default class SlideShow extends React.Component {
 				largeHeight		: flikrImage.largeHeight,
 				title			: flikrImage.title,
 				description		: flikrImage.description,
-				largeImageLimit,
+				overLargeImageWidthLimit,
+				overMediumImageWidthLimit,
 				srcSet			: `${flikrImage.squareURL} ${flikrImage.squareWidth}w,` +
 									`${flikrImage.smallURL} ${flikrImage.smallWidth}w,` +
 									`${flikrImage.mediumURL} ${flikrImage.mediumWidth}w`
 									+
-									(largeImageLimit ? `, ${flikrImage.largeURL} ${flikrImage.largeWidth}w` : ''),
+									(!overLargeImageWidthLimit ? `, ${flikrImage.largeURL} ${flikrImage.largeWidth}w` : ''),
 				sizes			: `(max-width: ${flikrImage.squareWidth}px) ${flikrImage.squareWidth}px,` +
 									`(max-width: ${flikrImage.smallWidth}px) ${flikrImage.smallWidth}px,` +
 									`(max-width: ${flikrImage.mediumWidth}px) ${flikrImage.mediumWidth}px`
 									+
-									(largeImageLimit ? `, (max-width: ${flikrImage.largeWidth}px) ${flikrImage.largeWidth}px` : '')
+									(!overLargeImageWidthLimit ? `, (max-width: ${flikrImage.largeWidth}px) ${flikrImage.largeWidth}px` : '')
 			};
 
-			this.maxHeight = largeImageLimit && flikrImage.largeHeight > this.maxHeight ? flikrImage.largeHeight : this.maxHeight;
+			// Keep track of the largest image height/width combo, to set image container box to
+			if(!overLargeImageWidthLimit && flikrImage.largeHeight > this.maxHeight) {
+				this.maxHeight	= flikrImage.largeHeight;
+				this.maxWidth	= flikrImage.largeWidth;
+			} else if(!overMediumImageWidthLimit && flikrImage.mediumHeight > this.maxHeight) {
+				this.maxHeight	= flikrImage.mediumHeight;
+				this.maxWidth	= flikrImage.mediumWidth;
+			}
 		});
 	}
 
@@ -166,47 +180,52 @@ export default class SlideShow extends React.Component {
 			this.getUpdatedImages(this.props.flikrImages);
 			this.setState({
 				image		: this.imageStates[this.imageStateIndex],
-				pagination	: this.getImagePagination()
+				pagination	: this.getImagePagination(),
+				maxHeight	: this.maxHeight,
+				maxWidth	: this.maxWidth
 			});
 		}
 	}
 
 	render() {
-		return (
-			<div>
+		const	imageCount	= Object.keys(this.imageStates).length,
+				leftCaret	= imageCount > 1 ?
+								<Col md="1" className="caret caret-left d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&lt;</Col> : '',
+				rightCaret	= imageCount > 1 ?
+								<Col md="1" className="caret caret-right d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col> : '';
+
+		return 	<div>
 				<Container>
 					<Row>
-						<Col md="1" className="caret caret-left d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&lt;</Col>
-						<Col xs="12" md="10" className="slide-show-image-col">
-							<ul className="slide-show-list">
-								<li key={this.state.image.id}>
-									<div className="image-container" style={{maxHeight : this.maxHeight}}>
+						{leftCaret}
+							<Col xs="12" md="10" className="slide-show-image-col">
+								<div	className	= "image-container"
+										style		= {{height 	: this.state.maxHeight+20}}>
 									{/* TODO - Link to Larger Image in lightbox */}
-										<img	id				= "slide-show-image"
-												srcSet			= {this.state.image.srcSet}
-												sizes			= {this.state.image.sizes}
-												src				= {this.state.image.mediumURL}
-												alt				= {this.state.image.title}
-												onTouchMove		= {this.handleTouchMove}
-												onTouchStart	= {this.handleTouchStart}
-												onTouchEnd		= {this.handleTouchEnd} />
+									<img	id				= "slide-show-image"
+											srcSet			= {this.state.image.srcSet}
+											sizes			= {this.state.image.sizes}
+											alt				= {this.state.image.title}
+											onTouchMove		= {this.handleTouchMove}
+											onTouchStart	= {this.handleTouchStart}
+											onTouchEnd		= {this.handleTouchEnd}
+											style			= {{maxHeight	: this.state.maxHeight+1,
+																maxWidth	: this.state.maxWidth+1,
+																width		: "100%"}} />
 									</div>
 
-									<div className="slide-show-image-caption">{this.state.image.title}</div>
-									<div className="slide-show-image-description">{this.state.image.description}</div>
-									<div>{this.state.image.index + 1}/{this.imagesLength}</div>
+								<div className="slide-show-image-caption">{this.state.image.title}</div>
+								<div className="slide-show-image-description">{this.state.image.description}</div>
+								<div>{this.state.image.index + 1}/{this.imagesLength}</div>
 
-									<ul className="image-pagination">
-										{this.state.pagination}
-									</ul>
-								</li>
-							</ul>
-						</Col>
-						<Col md="1" className="caret caret-right d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col>
+								<ul className="image-pagination">
+									{this.state.pagination}
+								</ul>
+							</Col>
+						{rightCaret}
 					</Row>
 				</Container>
 				{this.preCacheImages()}
 			</div>
-		)
 	}
 }
