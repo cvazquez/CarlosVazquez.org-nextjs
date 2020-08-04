@@ -188,11 +188,13 @@ export default class SlideShow extends React.Component {
 	}
 
 	render() {
+		// Only display right/left page arrows and page numbers, if there is more than one image
 		const	imageCount	= Object.keys(this.imageStates).length,
 				leftCaret	= imageCount > 1 ?
 								<Col md="1" className="caret caret-left d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&lt;</Col> : '',
 				rightCaret	= imageCount > 1 ?
 								<Col md="1" className="caret caret-right d-none d-md-block" onClick={this.handleNextPrevImageCLick}>&gt;</Col> : '',
+				// Displays a list of numbers to click on for images in a sequence
 				pageCounts	= imageCount > 1 ?
 								<><div>{this.state.image.index + 1}/{this.imagesLength}</div>
 								<ul className="image-pagination">{this.state.pagination}</ul></> : '';
@@ -203,7 +205,7 @@ export default class SlideShow extends React.Component {
 						{leftCaret}
 						<Col xs="12" md="10" className="slide-show-image-col">
 							<div	className	= "image-container"
-									style		= {{height 	: this.state.maxHeight+20}}>
+									style		= {{height 	: this.state.maxHeight+10}}>
 								{/* TODO - Link to Larger Image in lightbox */}
 								<img	id				= "slide-show-image"
 										srcSet			= {this.state.image.srcSet}
@@ -212,8 +214,12 @@ export default class SlideShow extends React.Component {
 										onTouchMove		= {this.handleTouchMove}
 										onTouchStart	= {this.handleTouchStart}
 										onTouchEnd		= {this.handleTouchEnd}
-										style			= {{maxHeight	: this.state.maxHeight+1,
-															maxWidth	: this.state.maxWidth+1,
+										style			= {{maxHeight	: this.state.maxHeight,
+															maxWidth	:
+																// Expand landscape images to width of image container
+																(this.state.image.smallWidth > this.state.image.smallHeight ?
+																	"100%" : this.state.maxWidth
+																),
 															width		: "100%"}} />
 								</div>
 
