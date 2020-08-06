@@ -239,9 +239,9 @@ body {
 			.image-container {
 				position: relative;
 				width: 100%;
-				border: 12px $separator-border-style $separator-border-color;
+				border: 12px $separator-border-style lightgray;
 				border-radius: 12px;
-				background-color: $separator-border-color;
+				background-color: lightgray;
 
 				// Center images in middle of container
 				img {
@@ -255,6 +255,7 @@ body {
 					left: 0;
 					right: 0;
 					margin: auto;
+					border: 1px solid darkgray;
 				}
 			}
 

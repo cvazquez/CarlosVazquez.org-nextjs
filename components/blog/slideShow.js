@@ -214,7 +214,11 @@ export default class SlideShow extends React.Component {
 										onTouchMove		= {this.handleTouchMove}
 										onTouchStart	= {this.handleTouchStart}
 										onTouchEnd		= {this.handleTouchEnd}
-										style			= {{maxHeight	: this.state.maxHeight,
+										style			= {{maxHeight	:
+																// Expand portrait images to height of image container
+																(this.state.image.smallWidth < this.state.image.smallHeight ?
+																	"100%" : this.state.maxHeight
+																),
 															maxWidth	:
 																// Expand landscape images to width of image container
 																(this.state.image.smallWidth > this.state.image.smallHeight ?
