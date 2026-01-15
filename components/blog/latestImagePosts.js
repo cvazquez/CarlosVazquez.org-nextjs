@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {Badge} from 'reactstrap';
 
 const latestImagePosts = ({latestImagePosts}) =>
+	latestImagePosts.length ?
 	<aside>
 		<header>
 			<h3>Latest Image Posts</h3>
@@ -22,5 +23,6 @@ const latestImagePosts = ({latestImagePosts}) =>
 			</li>
 		</ul>
 	</aside>
+	: <></>
 
 export default latestImagePosts;

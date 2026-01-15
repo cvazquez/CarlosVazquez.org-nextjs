@@ -3,6 +3,7 @@ import { Badge } from 'reactstrap'
 
 export default function TopCategories(topCategories) {
 	return (
+		topCategories.length ?
 		<aside>
 			<header>
 				<h3>Top Categories</h3>
@@ -25,5 +26,6 @@ export default function TopCategories(topCategories) {
 				</li>
 			</ul>
 		</aside>
+		: <></>
 	)
 }

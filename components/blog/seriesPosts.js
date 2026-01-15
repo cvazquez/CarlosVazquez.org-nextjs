@@ -8,6 +8,7 @@ export default class SeriesPosts extends React.Component {
 		});
 
 		return (
+			seriesFiltered.length ?
 			<div className="series-posts">
 				<h1>Related Posts</h1>
 				<ul>
@@ -21,6 +22,7 @@ export default class SeriesPosts extends React.Component {
 				}
 				</ul>
 			</div>
+			: <></>
 		)
 	}
 
