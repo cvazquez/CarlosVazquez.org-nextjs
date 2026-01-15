@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Badge } from 'reactstrap'
 
 const latestSeries = ({latestSeries}) =>
+	latestSeries.length ?
 		<aside>
 			<header>
 				<h3>Latest Series</h3>
@@ -22,5 +23,6 @@ const latestSeries = ({latestSeries}) =>
 				</li>
 			</ul>
 		</aside>
+	: <></>
 
 export default latestSeries;

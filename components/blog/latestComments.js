@@ -8,7 +8,7 @@ export default class LatestComments extends React.Component {
 	}
 
 	render() {
-		return (
+		return this.latestComments.length ? (
 			<aside>
 				<header>
 					<h3>Latest Comments</h3>
@@ -30,6 +30,6 @@ export default class LatestComments extends React.Component {
 					))}
 				</ul>
 			</aside>
-		)
+		) : <></>
 	}
 }
